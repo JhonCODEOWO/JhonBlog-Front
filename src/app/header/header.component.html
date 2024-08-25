@@ -1,0 +1,22 @@
+<header class=" bg-slate-300 dark:bg-black text-black dark:text-white flex justify-between pt-2 pb-2">
+    <a class="flex flex-col items-center p-3" [routerLink]="['']">
+        <p class="text-3xl w-full">Jhon<span class="font-black">Blog</span></p>
+        <p class="font-light text-xl">Tu sitio de interés</p>
+    </a>
+    <nav class="flex items-center pr-3 ol-3">
+        <ul class="flex justify-between gap-6 text-xl font-normal" *ngIf="logeado==false">
+            <li> <a>Iniciar sesión</a></li>
+            <li>Acerca de...</li>
+        </ul>
+        <ul class="flex justify-between gap-6 text-xl font-normal" *ngIf="logeado==true">
+            <li class="cursor-pointer">
+                Nombre de usuario <fa-icon *ngIf="menuVisible==false" [icon]="faCaredDown" (click)="showMenu()"></fa-icon> <fa-icon *ngIf="menuVisible==true" [icon]="faCaredUp" (click)="showMenu()"></fa-icon>
+                <div *ngIf="menuVisible" class="absolute bg-slate-300 dark:bg-black" @fadeInOut>
+                    <a *ngIf="role=='administrador'" [routerLink]="['admin']">Administración</a>
+                    <li class="text-red-500 cursor-pointer" (click)="deslogear()">Cerrar sesión</li>
+                </div>
+            </li>
+            <li>Acerca de...</li>
+        </ul>
+    </nav>
+</header>
