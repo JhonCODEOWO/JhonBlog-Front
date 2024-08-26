@@ -11,21 +11,27 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { FooterComponent } from './main/footer/footer.component';
+import { AsideMenuAdminComponent } from './administracion/aside-menu-admin/aside-menu-admin.component';
+import { AdministracionModule } from './administracion/administracion.module';
+import { HeaderAdminComponent } from './administracion/header-admin/header-admin.component';
+import { CategoriasComponent } from './administracion/categorias/categorias.component';
+import { InicioComponent } from './administracion/inicio/inicio.component';
+import { RolesPermComponent } from './administracion/roles-perm/roles-perm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdministracionComponent,
     HeaderComponent,
     MainComponent,
     LoginComponent,
     NotfoundComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
+    AdministracionModule
   ],
   providers: [
     provideAnimationsAsync()

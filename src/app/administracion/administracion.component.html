@@ -1,1 +1,7 @@
-<p>administracion works!</p>
+<div class="flex relative w-full">
+    <app-aside-menu-admin></app-aside-menu-admin>
+    <div class="flex-1">
+        <app-header-admin [tittlePage]="tittlePage"></app-header-admin>
+        <router-outlet></router-outlet>
+    </div>
+</div>
