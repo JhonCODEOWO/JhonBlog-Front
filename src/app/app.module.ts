@@ -17,6 +17,8 @@ import { HeaderAdminComponent } from './administracion/header-admin/header-admin
 import { CategoriasComponent } from './administracion/categorias/categorias.component';
 import { InicioComponent } from './administracion/inicio/inicio.component';
 import { RolesPermComponent } from './administracion/roles-perm/roles-perm.component';
+import { DataCSRF } from './dataCSRF.service';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { RolesPermComponent } from './administracion/roles-perm/roles-perm.compo
     AdministracionModule
   ],
   providers: [
-    provideAnimationsAsync()
+    DataCSRF,
+    provideHttpClient(),
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent]
 })
