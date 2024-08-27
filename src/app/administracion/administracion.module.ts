@@ -13,6 +13,7 @@ import { general_data } from './general_data.service';
 import { RolesPermComponent } from './roles-perm/roles-perm.component';
 import { RolePermissionsService } from './roles-permissions.service';
 import { RolesComponent } from './roles-perm/roles/roles.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { RolesComponent } from './roles-perm/roles/roles.component';
     CommonModule,
     AdministracionRoutingModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    SweetAlert2Module
   ],
   providers: [
     general_data,

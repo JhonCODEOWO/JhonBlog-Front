@@ -46,6 +46,24 @@ export class RolePermissionsService{
         )
     }
 
+    //Petición post para añadir un registro de un role
+    addRole(name:string, description:string): Observable<InfoRequest>{
+        //Get the token placed in the cookie
+        let token = this.csrf.getCookie('XSRF-TOKEN');
+
+        //Prepare the header to be placed in the request
+        let headers = {
+            'X-XSRF-TOKEN': token,
+        };
+        
+        //Prepare the data to be sended
+        let peticion = {
+            name: name,
+            description: description
+        };
+
+        return this.http.post<InfoRequest>(`${this.url}/role/create`, peticion, {headers, withCredentials:true});
+    }
     //Petición put para actualizar un registro que necesita ser consumido por un componente. Retorna un objeto InfoRequest perteneciente al modelo request_info.ts
     updateRole(role:Role): Observable<InfoRequest>{
         //Get the token placed in the cookie

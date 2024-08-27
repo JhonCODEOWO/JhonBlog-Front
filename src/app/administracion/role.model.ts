@@ -1,7 +1,7 @@
 import { Permission } from "./permission.model";
 
 export class Role{
-    id: number = -1;
+    id: number;
     name: string = '';
     description: string = '';
     created_at: string = '';

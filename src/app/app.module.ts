@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import {ToastrModule} from 'ngx-toastr';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,7 +36,8 @@ import { provideHttpClient } from '@angular/common/http';
     AppRoutingModule,
     FontAwesomeModule,
     AdministracionModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SweetAlert2Module.forRoot()
   ],
   providers: [
     DataCSRF,
