@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 import { AdministracionRoutingModule } from './administracion-routing.module';
 import { AdministracionComponent } from './administracion.component';
@@ -10,6 +11,8 @@ import { CategoriasComponent } from './categorias/categorias.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { general_data } from './general_data.service';
 import { RolesPermComponent } from './roles-perm/roles-perm.component';
+import { RolePermissionsService } from './roles-permissions.service';
+import { RolesComponent } from './roles-perm/roles/roles.component';
 
 
 @NgModule({
@@ -19,15 +22,18 @@ import { RolesPermComponent } from './roles-perm/roles-perm.component';
     HeaderAdminComponent,
     CategoriasComponent,
     InicioComponent,
-    RolesPermComponent
+    RolesPermComponent,
+    RolesComponent,
   ],
   imports: [
     CommonModule,
     AdministracionRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   providers: [
-    general_data
+    general_data,
+    RolePermissionsService
   ]
 })
 export class AdministracionModule { }

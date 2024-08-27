@@ -6,11 +6,18 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class DataCSRF{
     tokenActual:string = '';
-    url: string = 'http://localhost:8088/getCSRF';
+    private csrfUrl = 'http://localhost:8088/sanctum/csrf-cookie';
     constructor(private http:HttpClient){}
 
-    //Retorno de observable para ser consumido por otro componente
-    getCsrf(): Observable<Csrf>{
-        return this.http.get<Csrf>(this.url);
+    getCsrfToken(): Observable<any> {
+        return this.http.get(`${this.csrfUrl}`, {withCredentials: true});
+    }
+
+    getCookie(name: string): string {
+        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+            return match[2];
+        }
+        return '';
     }
 }

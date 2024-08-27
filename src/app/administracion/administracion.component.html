@@ -1,7 +1,9 @@
 <div class="flex relative w-full">
     <app-aside-menu-admin></app-aside-menu-admin>
-    <div class="flex-1">
+    <div class="flex-1 w-full">
         <app-header-admin [tittlePage]="tittlePage"></app-header-admin>
-        <router-outlet></router-outlet>
+        <div class="p-2 relative">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>
