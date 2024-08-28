@@ -36,7 +36,10 @@ import { provideHttpClient } from '@angular/common/http';
     AppRoutingModule,
     FontAwesomeModule,
     AdministracionModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right'
+    }),
     SweetAlert2Module.forRoot()
   ],
   providers: [

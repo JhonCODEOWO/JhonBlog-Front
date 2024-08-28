@@ -9,9 +9,6 @@ import { InfoRequest } from "../request_info.model";
 @Injectable()
 export class RolePermissionsService{
     constructor(private http:HttpClient, private csrf: DataCSRF){}
-    
-    private permissions = new BehaviorSubject<Permission[]>([]);
-    permissions$ = this.permissions.asObservable();
 
     private roles = new BehaviorSubject<Role[]>([]);
     roles$ = this.roles.asObservable();
@@ -33,17 +30,8 @@ export class RolePermissionsService{
     }
 
     //Petición get para obtener todos los registros de los permisos
-    getPermissions(){
-        this.http.get<Permission[]>(this.url + '/permissions').subscribe(
-            {
-                next: (data: Permission[])=>{
-                    this.permissions.next(data);
-                },
-                error: (error)=>{
-                    console.log(error);
-                }
-            }
-        )
+    getPermissions(role: Role): Observable<Permission[]>{
+        return this.http.get<Permission[]>(this.url + `/permissions/${role.id}`);
     }
 
     //Petición post para añadir un registro de un role
@@ -87,5 +75,22 @@ export class RolePermissionsService{
 
     deleteRole(role:Role): Observable<InfoRequest>{
         return this.http.delete<InfoRequest>(`${this.url}/delete/role/${role.id}`, {withCredentials: true});
+    }
+
+    assignPermissionToRole(permission: Permission, role: Role): Observable<InfoRequest>{
+        //Get the token placed in the cookie
+        let token = this.csrf.getCookie('XSRF-TOKEN');
+
+        //Prepare the header to be placed in the request
+        let headers = {
+            'X-XSRF-TOKEN': token,
+        };
+        
+        //Prepare the data to be sended
+        let peticion = {
+            role: role.id
+        };
+
+        return this.http.post<InfoRequest>(`${this.url}/assignpermission/${permission.id}`, peticion, {headers, withCredentials: true});
     }
 }

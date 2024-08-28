@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Role } from '../../role.model';
-import { faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPencil, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { RolePermissionsService } from '../../roles-permissions.service';
 import { InfoRequest } from '../../../request_info.model';
 import { ToastrService } from 'ngx-toastr';
 import { SwalPortalTargets, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { Permission } from '../../permission.model';
 
 @Component({
   selector: 'app-roles',
@@ -24,12 +25,14 @@ export class RolesComponent implements OnInit {
   //Iconos utilizados
   faTrash = faTrash;
   faPencil = faPencil;
+  faTriangleExclamation = faTriangleExclamation;
   showModal: boolean = false;
 
   //Propiedades utilizadas.
   name: string = '';
   description: string = '';
   roleFinded: Role | undefined;
+  permissions: Permission[] = []; //Arreglo que almacenará los permisos disponibles para cada rol.
   @Input() roles: Role[] = [];
 
   ngOnInit(): void {
@@ -139,5 +142,57 @@ export class RolesComponent implements OnInit {
         this.toastService.error(error);
       },
     });
+  }
+
+  //Método usado para realizar la petición de permisos y guardarla en la propiedad del servicio permissions$
+  obtenerPermisos(role: Role){
+    //Reiniciamos los datos que puedan existir
+    this.permissions = [];
+    //Consumir el observable que obtiene los permisos disponibles para cada usuario y cargarlo a la propiedad de permissions.
+    this.rolepermissionService.getPermissions(role).subscribe({
+      next: (permissions: Permission[])=>{
+        this.permissions=permissions;
+        console.log(this.permissions);
+      },
+      error: (error)=>{
+        this.toastService.error('Ha ocurrido un error al obtener los permisos disponibles');
+        console.error(error);
+      }
+    });
+  }
+
+  //Función usada para asignar un permiso a un rol al arreglo existente de roles y realizar la petición al backend
+  asignarPermiso(role: Role, permission: Permission){
+    let id = role.id;
+    
+    //Encontrar el objeto dentro de los roles actuales.
+    let roleFinded = this.roles.find((role)=>role.id == id );
+
+    //Asignamos el permiso al arreglo de permisos del objeto actual.
+    roleFinded?.permissions.push(permission);
+
+    //Realizamos la petición al servidor para almacenar en el backend los cambios
+    this.rolepermissionService.assignPermissionToRole(permission, role).subscribe({
+      next: (response: InfoRequest)=>{
+        if (response.status = 'ok') {
+          this.toastService.success(response.message);
+        }else{
+          this.toastService.error(response.message);
+        }
+      },
+      error: (error)=>{
+        this.toastService.error('Ha ocurrido un error al realizar la petición, el permiso que intentabas relacionar no se ha podido llevar a cabo.');
+        console.error(error);
+      }
+    });
+
+    //Eliminamos el permiso asignado del la propiedad permissions
+    let indexOf = this.permissions.indexOf(permission); // Obtener index del objeto dentro del arreglo
+    this.permissions.splice(indexOf, 1); //Eliminar del arreglo
+  }
+
+  //Ejecuta la eliminación de un permiso en la instancia permissions de un objeto Role
+  eliminarPermiso(role: Role, permission: Permission){
+    
   }
 }
