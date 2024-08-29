@@ -93,4 +93,16 @@ export class RolePermissionsService{
 
         return this.http.post<InfoRequest>(`${this.url}/assignpermission/${permission.id}`, peticion, {headers, withCredentials: true});
     }
+
+    quitPermission(permission: Permission, role: Role): Observable<InfoRequest>{
+        //Get the token placed in the cookie
+        let token = this.csrf.getCookie('XSRF-TOKEN');
+
+        //Prepare the header to be placed in the request
+        let headers = {
+            'X-XSRF-TOKEN': token,
+        };
+
+        return this.http.delete<InfoRequest>(`${this.url}/quitpermission/${permission.id}/${role.id}`, {headers, withCredentials:true});
+    }
 }
