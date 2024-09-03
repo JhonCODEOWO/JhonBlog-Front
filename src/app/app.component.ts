@@ -16,18 +16,7 @@ export class AppComponent implements OnInit, OnDestroy{
   constructor(private csrfService:DataCSRF){}
   
   ngOnInit(): void {
-      //Ejecuta la petición y asigna el resultado a la propiedad tokenActual del servicio
-      this.csrfService.getCsrfToken().subscribe(
-        {
-          next: (response:Csrf)=>{
-            console.log(response);
-            // this.csrfService.tokenActual = response.token;
-          },
-          error: (error) =>{
-            console.log(error);
-          }
-        }
-      );
+      this.csrfService.getCsrfToken();
   }
 
   ngOnDestroy(): void {

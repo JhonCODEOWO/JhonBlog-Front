@@ -1,113 +1,115 @@
-<div class="flex gap-x-4 justify-center items-center">
-    <h2 class="font-thin text-4xl">Roles actuales en el sistema</h2>
-    <button [swal]="addElementSwal" class="p-2 bg-green-500 rounded-sm">Añadir nuevo</button>
-</div>
-
-<swal #addElementSwal [swalOptions]="{confirmButtonText: 'Añadir'}" title="Añadir un nuevo rol"
-    [showCancelButton]="true" (confirm)="addRole()">
-    <form *swalPortal="swalTargets.content" action="" class="flex flex-col gap-y-3">
-        <p *ngIf="name.length>15 && name!=undefined" class="text-red-500 text-sm text-start">No se permite un nombre con
-            más de 15 caracteres</p>
-        <input type="text" placeholder="El nombre del rol" name="name" [(ngModel)]="name"
-            class="p-2 border border-gray-700 focus:outline-none">
-        <p *ngIf="description.length>50 && name!= undefined" class="text-red-500 text-sm text-start">No se permiten más
-            de 50 caracteres para este campo.</p>
-        <input type="text" placeholder="La descripción para el rol" name="description" [(ngModel)]="description"
-            class="p-2 border border-gray-700 focus:outline-none">
-    </form>
-</swal>
-
-<div *ngIf="roles.length == 0" class="flex justify-center">
-    <h3 class="font-medium text-2xl">Sin registros actualmente</h3>
-</div>
-
-<div *ngIf="roles.length > 0">
-    <ul class="flex gap-x-6 mt-5">
-        <li *ngFor="let role of roles" [ngClass]="{'bg-yellow-600': role.permissions.length==0, 'bg-green-500': role.permissions.length>0}"
-            class="text-lg flex items-center gap-x-3 justify-between p-2" [swal]="detallesRol" (click)="obtenerPermisos(role)">
-            <p class="cursor-pointer flex flex-col">
-                <span class="uppercase">{{role.name}}</span>
-                <span>{{role.description}}</span>
-                <span *ngIf="role.permissions.length==0"><fa-icon [icon]="faTriangleExclamation"></fa-icon> Aún no hay permisos asignados a este rol</span>
-                <span *ngIf="role.permissions.length>0">Permisos asignados: {{role.permissions.length}}</span>
-            </p>
-
-            <swal #eliminarRole title="¿Estás seguro de eliminar el rol {{role.name}}?"
-                text="Se eliminará de todos los usuarios a los que está asignado así como su desvinculación de los permisos que hayas asignado."
-                icon="warning" [swalOptions]="{confirmButtonText: 'Eliminar', cancelButtonText: 'Cancelar'}"
-                [showCancelButton]="true" (confirm)="deleteRole(role)"></swal>
-
-            <swal #modificarRole title="Modificando {{role.name}}"
-                [swalOptions]="{confirmButtonText: 'Aplicar cambios', cancelButtonText: 'Cancelar operación'}"
-                [showCancelButton]="true" (confirm)="actualizarElemento(role)">
-                <form action="" *swalPortal="swalTargets.content" class="flex flex-col gap-y-3">
-                    <div class="flex flex-col">
-                        <label for="name" class="text-start">Nombre para el rol:</label>
-                        <p *ngIf="name.length>15 && name!=undefined" class="text-red-500 text-sm text-start">No se
-                            permite un nombre con
-                            más de 15 caracteres</p>
-                        <input type="text" placeholder="El nombre del rol" name="name" [(ngModel)]="name"
-                            class="p-2 border border-gray-700 focus:outline-none">
-                    </div>
-
-                    <div class="flex flex-col">
-                        <label for="description" class="text-start">Descripción</label>
-                        <p *ngIf="description.length>50 && name!= undefined" class="text-red-500 text-sm text-start">No
-                            se
-                            permiten más
-                            de 50 caracteres para este campo.</p>
-                        <input type="text" placeholder="La descripción para el rol" name="description"
-                            [(ngModel)]="description" class="p-2 border border-gray-700 focus:outline-none">
-                    </div>
-                </form>
-            </swal>
-
-            <swal #detallesRol title="Detalles del rol {{role.name}}">
-                <div *swalPortal="swalTargets.content" class="flex gap-x-4">
-                    <div>
-                        <h5>Creado(a): {{role.created_at | date}}</h5>
-                        <h5>Modificado(a): {{role.updated_at | date}}</h5>
-                        <p><span>Descripción:</span> {{role.description}}</p>
+<div>
+    <div class="flex gap-x-4 justify-center items-center">
+        <h2 class="font-thin text-4xl">Roles actuales en el sistema</h2>
+        <button [swal]="addElementSwal" class="p-2 bg-green-500 rounded-sm">Añadir nuevo</button>
+    </div>
+    
+    <swal #addElementSwal [swalOptions]="{confirmButtonText: 'Añadir'}" title="Añadir un nuevo rol"
+        [showCancelButton]="true" (confirm)="addRole()">
+        <form *swalPortal="swalTargets.content" action="" class="flex flex-col gap-y-3">
+            <p *ngIf="name.length>15 && name!=undefined" class="text-red-500 text-sm text-start">No se permite un nombre con
+                más de 15 caracteres</p>
+            <input type="text" placeholder="El nombre del rol" name="name" [(ngModel)]="name"
+                class="p-2 border border-gray-700 focus:outline-none">
+            <p *ngIf="description.length>50 && name!= undefined" class="text-red-500 text-sm text-start">No se permiten más
+                de 50 caracteres para este campo.</p>
+            <input type="text" placeholder="La descripción para el rol" name="description" [(ngModel)]="description"
+                class="p-2 border border-gray-700 focus:outline-none">
+        </form>
+    </swal>
+    
+    <div *ngIf="roles.length == 0" class="flex justify-center">
+        <h3 class="font-medium text-2xl">Sin registros actualmente</h3>
+    </div>
+    
+    <div *ngIf="roles.length > 0">
+        <ul class="grid grid-cols-3 gap-6 mt-5">
+            <li *ngFor="let role of roles" [ngClass]="{'bg-yellow-600': role.permissions.length==0, 'bg-green-500': role.permissions.length>0}"
+                class="text-lg flex items-center gap-x-3 justify-between p-2" [swal]="detallesRol" (click)="obtenerPermisos(role)">
+                <p class="cursor-pointer flex flex-col">
+                    <span class="uppercase">{{role.name}}</span>
+                    <span>{{role.description}}</span>
+                    <span *ngIf="role.permissions.length==0"><fa-icon [icon]="faTriangleExclamation"></fa-icon> Aún no hay permisos asignados a este rol</span>
+                    <span *ngIf="role.permissions.length>0">Permisos asignados: {{role.permissions.length}}</span>
+                </p>
+    
+                <swal #eliminarRole title="¿Estás seguro de eliminar el rol {{role.name}}?"
+                    text="Se eliminará de todos los usuarios a los que está asignado así como su desvinculación de los permisos que hayas asignado."
+                    icon="warning" [swalOptions]="{confirmButtonText: 'Eliminar', cancelButtonText: 'Cancelar'}"
+                    [showCancelButton]="true" (confirm)="deleteRole(role)"></swal>
+    
+                <swal #modificarRole title="Modificando {{role.name}}"
+                    [swalOptions]="{confirmButtonText: 'Aplicar cambios', cancelButtonText: 'Cancelar operación'}"
+                    [showCancelButton]="true" (confirm)="actualizarElemento(role)">
+                    <form action="" *swalPortal="swalTargets.content" class="flex flex-col gap-y-3">
+                        <div class="flex flex-col">
+                            <label for="name" class="text-start">Nombre para el rol:</label>
+                            <p *ngIf="name.length>15 && name!=undefined" class="text-red-500 text-sm text-start">No se
+                                permite un nombre con
+                                más de 15 caracteres</p>
+                            <input type="text" placeholder="El nombre del rol" name="name" [(ngModel)]="name"
+                                class="p-2 border border-gray-700 focus:outline-none">
+                        </div>
+    
+                        <div class="flex flex-col">
+                            <label for="description" class="text-start">Descripción</label>
+                            <p *ngIf="description.length>50 && name!= undefined" class="text-red-500 text-sm text-start">No
+                                se
+                                permiten más
+                                de 50 caracteres para este campo.</p>
+                            <input type="text" placeholder="La descripción para el rol" name="description"
+                                [(ngModel)]="description" class="p-2 border border-gray-700 focus:outline-none">
+                        </div>
+                    </form>
+                </swal>
+    
+                <swal #detallesRol title="Detalles del rol {{role.name}}">
+                    <div *swalPortal="swalTargets.content" class="flex gap-x-4">
                         <div>
-                            <!-- Recorre los permisos contenidos dentro del rol clickeado -->
-                            <h4>Permisos asignados actualmente</h4>
-                            <p *ngIf="role.permissions.length==0" class="text-red-600 uppercase">Aún no se han asignado permisos a este rol</p>
-                            <ul *ngIf="role.permissions.length!=0">
-                                <li *ngFor="let permission of role.permissions" class="flex">
-                                    {{permission.name}}
-                                    <button class="text-red-500 underline ml-auto" (click)="eliminarPermiso(role, permission)">Quitar</button>
-                                </li>
+                            <h5>Creado(a): {{role.created_at | date}}</h5>
+                            <h5>Modificado(a): {{role.updated_at | date}}</h5>
+                            <p><span>Descripción:</span> {{role.description}}</p>
+                            <div>
+                                <!-- Recorre los permisos contenidos dentro del rol clickeado -->
+                                <h4>Permisos asignados actualmente</h4>
+                                <p *ngIf="role.permissions.length==0" class="text-red-600 uppercase">Aún no se han asignado permisos a este rol</p>
+                                <ul *ngIf="role.permissions.length!=0">
+                                    <li *ngFor="let permission of role.permissions" class="flex">
+                                        {{permission.name}}
+                                        <button class="text-red-500 underline ml-auto" (click)="eliminarPermiso(role, permission)">Quitar</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul>
+                                <li *ngFor="let permission of role.permissions"></li>
                             </ul>
                         </div>
-                        <ul>
-                            <li *ngFor="let permission of role.permissions"></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <!-- Recorre los permisos disponibles del usuario que hace la petición -->
-                        <h2 class="text-justify">Permisos disponibles</h2>
-                        <div *ngIf="permissions.length==0">
-                            <p>No hay permisos disponibles</p>
-                        </div>
                         <div>
-                            <ul *ngIf="permissions.length>0">
-                                <li *ngFor="let permissionAvailable of permissions" class="text-blue-700 underline cursor-pointer" (click)="asignarPermiso(role, permissionAvailable)">
-                                    {{permissionAvailable.name}}
-                                </li>
-                            </ul>
+                            <!-- Recorre los permisos disponibles del usuario que hace la petición -->
+                            <h2 class="text-justify">Permisos disponibles</h2>
+                            <div *ngIf="permissions.length==0">
+                                <p>No hay permisos disponibles</p>
+                            </div>
+                            <div>
+                                <ul *ngIf="permissions.length>0">
+                                    <li *ngFor="let permissionAvailable of permissions" class="text-blue-700 underline cursor-pointer" (click)="asignarPermiso(role, permissionAvailable)">
+                                        {{permissionAvailable.name}}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                </swal>
+    
+                <div class="ml-auto">
+                    <button (click)="showRole(role)" [swal]="modificarRole"
+                        class="bg-blue-500 text-white rounded-sm p-4 hover:bg-blue-500/40 transition-colors"><fa-icon
+                            [icon]="faPencil" class="text-xl"></fa-icon></button>
+                    <button [swal]="eliminarRole"
+                        class="bg-red-500 text-white rounded-sm p-4 hover:bg-red-500/40 transition-colors"><fa-icon
+                            [icon]="faTrash" class="text-xl"></fa-icon></button>
                 </div>
-            </swal>
-
-            <div class="ml-auto">
-                <button (click)="showRole(role)" [swal]="modificarRole"
-                    class="bg-blue-500 text-white rounded-sm p-4 hover:bg-blue-500/40 transition-colors"><fa-icon
-                        [icon]="faPencil" class="text-xl"></fa-icon></button>
-                <button [swal]="eliminarRole"
-                    class="bg-red-500 text-white rounded-sm p-4 hover:bg-red-500/40 transition-colors"><fa-icon
-                        [icon]="faTrash" class="text-xl"></fa-icon></button>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
 </div>

@@ -5,7 +5,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdministracionComponent } from './administracion/administracion.component';
 import { HeaderComponent } from './header/header.component';
 import { MainComponent } from './main/main.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,12 +12,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { FooterComponent } from './main/footer/footer.component';
-import { AsideMenuAdminComponent } from './administracion/aside-menu-admin/aside-menu-admin.component';
 import { AdministracionModule } from './administracion/administracion.module';
-import { HeaderAdminComponent } from './administracion/header-admin/header-admin.component';
-import { CategoriasComponent } from './administracion/categorias/categorias.component';
-import { InicioComponent } from './administracion/inicio/inicio.component';
-import { RolesPermComponent } from './administracion/roles-perm/roles-perm.component';
 import { DataCSRF } from './dataCSRF.service';
 import { provideHttpClient } from '@angular/common/http';
 
@@ -40,7 +34,13 @@ import { provideHttpClient } from '@angular/common/http';
       timeOut: 10000,
       positionClass: 'toast-bottom-right'
     }),
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot({
+      provideSwal: ()=>import('sweetalert2').then(({ default: swal })=> swal.mixin({
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        animation: false,
+      }))
+    })
   ],
   providers: [
     DataCSRF,

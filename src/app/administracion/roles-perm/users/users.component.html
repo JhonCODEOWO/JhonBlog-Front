@@ -1,0 +1,88 @@
+<div class="pl-3 pr-3">
+    <div class="flex flex-col gap-x-4 justify-center items-center">
+        <h2 class="font-thin text-4xl">Usuarios</h2>
+        <button [swal]="addUserModal" class="p-2 bg-green-500 rounded-sm w-full">Añadir nuevo</button>
+    </div>
+
+    <swal #addUserModal title="Añadir nuevo usuario" [showConfirmButton]="false" [showCancelButton]="false"
+        [swalOptions]="{confirmButtonText: 'Guardar usuario', cancelButtonText: 'Cancelar'}"
+        (dismiss)="handleDissmiss()">
+        <form *swalPortal="swalTargets.content" #fAddNew="ngForm" (ngSubmit)="fAddNew.form.valid && addUser(fAddNew)"
+            class="flex flex-col gap-y-3">
+            <div>
+                <div *ngIf="errors.name">
+                    <p *ngFor="let error of errors.name" class="text-red-500 text-start">{{error}}</p>
+                </div>
+                <p *ngIf="name == ''" class="text-red-500">El nombre es obligatorio para continuar</p>
+                <input type="text" placeholder="Nombre para el nuevo usuario" name="name"
+                    class="w-full focus:outline-none focus:border-sky-600 border border-slate-400 p-3"
+                    [(ngModel)]="name" required>
+            </div>
+            <div>
+                <div *ngIf="errors.email">
+                    <p *ngFor="let error of errors.email" class="text-red-500 text-start">{{error}}</p>
+                </div>
+                <p *ngIf="email == ''" class="text-red-500">El correo es obligatorio para continuar </p>
+                <input type="email" placeholder="Correo del usuario" name="email"
+                    class="w-full focus:outline-none focus:border-sky-600 border border-slate-400 p-3"
+                    [(ngModel)]="email" required>
+            </div>
+
+            <div>
+                <div *ngIf="errors.password">
+                    <p *ngFor="let error of errors.password" class="text-red-500 text-start">{{error}}</p>
+                </div>
+                <p *ngIf="password == ''" class="text-red-500">La contraseña es obligatoria </p>
+                <input type="password" placeholder="Contraseña para el acceso del usuario" name="password"
+                    class="w-full focus:outline-none focus:border-sky-600 border border-slate-400 p-3"
+                    [(ngModel)]="password" required>
+            </div>
+            <div>
+                <p *ngIf="password != password_confirmation" class="text-red-500">Las contraseñas no coinciden </p>
+                <p *ngIf="password_confirmation == ''" class="text-red-500">Repetir la contraseña es obligatorio</p>
+                <input type="password" placeholder="Repite la contraseña" name="password_confirmation"
+                    class="w-full focus:outline-none focus:border-sky-600 border border-slate-400 p-3"
+                    [(ngModel)]="password_confirmation" required>
+            </div>
+            <button class="bg-green-500">Guardar información</button>
+        </form>
+    </swal>
+
+    <div *ngIf="users.length===0">
+        <p>No hay usuarios registrados en el sistema</p>
+    </div>
+
+    <div *ngIf="users.length>0" class="mt-2">
+        <ul class="flex flex-col gap-y-3">
+            <li *ngFor="let user of users" class="cursor-pointer" [swal]="showUserModal" (click)="showUser(user)">
+                <p class="font-semibold text-2xl">{{user.name}}</p>
+                <p>{{user.email}}</p>
+            </li>
+        </ul>
+    </div>
+
+    <swal #showUserModal [showCancelButton]="false" [showConfirmButton]="false" [showCloseButton]="true">
+        <div *swalPortal="swalTargets.content">
+            <div *ngIf="userFinded">
+                <div class="mb-4">
+                    <h2 class="font-black text-4xl">{{userFinded.name}}</h2>
+                    <p>Creado: {{userFinded.created_at | date:'medium':'MX'}}</p>
+                    <p>Última vez actualizado: {{userFinded.updated_at | date:'medium':'es-MX'}}</p>
+                </div>
+                <div *ngIf="userFinded.roles.length == 0">
+                    <p class="text-sky-500">Este usuario no tiene roles asignados</p>
+                </div>
+                <div *ngIf="userFinded.roles.length>0">
+                    <p *ngFor="let role of userFinded.roles">{{role}}</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h3 class="font-bold text-2xl">Opciones</h3>
+                <div class="flex justify-between">
+                    <button (click)="deleteUser(userFinded)">Eliminar</button>
+                    <button>Modificar</button>
+                </div>
+            </div>
+        </div>
+    </swal>
+</div>

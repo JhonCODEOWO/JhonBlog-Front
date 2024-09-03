@@ -3,6 +3,8 @@ import { general_data } from '../general_data.service';
 import { DataCSRF } from '../../dataCSRF.service';
 import { RolePermissionsService } from '../roles-permissions.service';
 import { Role } from '../role.model';
+import { User } from './users/user.model';
+import { UserServices } from './users/users.service';
 
 @Component({
   selector: 'app-roles-perm',
@@ -10,13 +12,15 @@ import { Role } from '../role.model';
   styleUrl: './roles-perm.component.css'
 })
 export class RolesPermComponent implements OnInit {
-  constructor(private generalData: general_data, private csrfService: DataCSRF, private rolespermissionService:RolePermissionsService){}
+  constructor(private generalData: general_data, private csrfService: DataCSRF, private rolespermissionService:RolePermissionsService, private userService: UserServices){}
   tittle: string = 'Roles y permisos';
   roles: Role[] = [];
+  users: User[] = [];
 
   ngOnInit(): void {
     this.generalData.setTittle(this.tittle);
     this.rolespermissionService.getRoles();
+    this.userService.getUsers();
 
     //Suscripción a los cambios de roles$ en el servicio
     this.rolespermissionService.roles$.subscribe(
@@ -29,5 +33,15 @@ export class RolesPermComponent implements OnInit {
         }
       }
     );
+
+    //Suscripción a los cambios de la propiedad users$ del servicio users.service
+    this.userService.users$.subscribe({
+      next: (users:User[])=>{
+        this.users = users;
+      },
+      error: (error)=>{
+        console.error(error);
+      }
+    })
   }
 }

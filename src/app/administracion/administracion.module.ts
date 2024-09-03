@@ -14,6 +14,8 @@ import { RolesPermComponent } from './roles-perm/roles-perm.component';
 import { RolePermissionsService } from './roles-permissions.service';
 import { RolesComponent } from './roles-perm/roles/roles.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { UsersComponent } from './roles-perm/users/users.component';
+import { UserServices } from './roles-perm/users/users.service';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     InicioComponent,
     RolesPermComponent,
     RolesComponent,
+    UsersComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   ],
   providers: [
     general_data,
-    RolePermissionsService
+    RolePermissionsService,
+    UserServices
   ]
 })
 export class AdministracionModule { }
