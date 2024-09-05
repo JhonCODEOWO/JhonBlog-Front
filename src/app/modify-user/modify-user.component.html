@@ -1,0 +1,66 @@
+<div>
+    <div *ngIf="userSeletected==undefined">
+        <p class="w-full text-red-600 text-4xl text-center">No se ha seleccionado ningún usuario</p>
+    </div>
+
+    <div *ngIf="userSeletected" class="grid grid-cols-1 xl:grid-cols-2 gap-x-6">
+        <!-- Div destinado a contener formularios para actualizar datos de perfil y de cuenta -->
+        <div class=" dark:bg-black/30 rounded-md p-3">
+            <form action="" #formUser="ngForm" (ngSubmit)="formUser.form.valid && updateUser(formUser)">
+                <div class="flex flex-col">
+                    <div>
+                        <h2 class="w-full text-center text-3xl font-light">Información de la cuenta</h2>
+                        <div class="flex flex-col mt-2">
+                            <label for="name">Nombre de la cuenta:</label>
+                            <input type="text" id="name" name="name" required placeholder="Nombre del usuario"
+                                [(ngModel)]="userSeletected.name" class="text-black p-2">
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required placeholder="Correo del usuario"
+                                [(ngModel)]="userSeletected.email" class="text-black p-2">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 p-3 text-center mt-2 transition-colors">Actualizar datos</button>
+            </form>
+        </div>
+
+        <!-- Div destinado a contener manejo de roles para el usuario -->
+        <div class="dark:bg-black/30 rounded-md">
+            <h2 class="w-full text-center text-3xl font-light">Roles para el usuario</h2>
+            <div class="grid grid-cols-2 gap-x-6 mt-2 p-3">
+                <div class="bg-zinc-900 p-2">
+                    <h3 class="w-full text-center text-xl">Roles asignados</h3>
+
+                    <div *ngIf="userSeletected.roles.length == 0">
+                        <p class=" text-red-600 text-center">Este usuario aún no tiene roles asignados</p>
+                    </div>
+                    <div *ngIf="userSeletected.roles.length > 0">
+                        <p *ngFor="let role of userSeletected.roles" class="cursor-pointer flex justify-between text-lg">
+                            <span>{{role.name}}</span>
+                            <button class="cursor-pointer" (click)="deleteRoleFromUser(userSeletected, role)">
+                                <fa-icon [icon]="faTrash" class="text-red-500"></fa-icon>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 p-2">
+                    <h3 class="w-full text-center text-xl">Roles disponibles</h3>
+                    <div *ngIf="roles.length==0">
+                        <p class="text-red-600 text-center">Ya no hay roles disponibles para asignar a este usuario</p>
+                    </div>
+
+                    <div *ngIf="roles.length>0">
+                        <p *ngFor="let role of roles" class="flex justify-between text-lg">
+                            <span>{{role.name}} </span>
+                            <button (click)="addRoleToUser(role, userSeletected)">
+                                <fa-icon [icon]="faPlus" class="text-green-500"></fa-icon>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

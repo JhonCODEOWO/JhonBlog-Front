@@ -6,6 +6,7 @@ import { UserServices } from './users.service';
 import { InfoRequest } from '../../../request_info.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -15,7 +16,8 @@ export class UsersComponent {
   constructor(
     readonly swalTargets: SwalPortalTargets,
     private userService: UserServices,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private router: Router
   ) {}
 
   @Input() users: User[] = [];
@@ -117,6 +119,19 @@ export class UsersComponent {
 
   showUser(user: User) {
     this.userFinded = this.getUser(user);
+  }
+
+  //Método que selecciona un usuario y redirecciona hacia la página para modificarlo.
+  selectUser(user: User | undefined) {
+    //Colocar el usuario si no está indefinido en nuestro behavior del servicio
+    if (user != undefined) {
+      this.userService.setSelectedUser(user);
+
+      //Redireccionar hacia el componente
+      this.router.navigate(['admin/user/modify']);
+    }else{
+      this.toastService.error('El usuario que intentas editar no existe');
+    }
   }
 
   //Método para realizar acciones si el usuario da click fuera del modal o lo cierra

@@ -1,14 +1,16 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Permission } from "./permission.model";
 import { Role } from "./role.model";
 import { Inject, Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { DataCSRF } from "../dataCSRF.service";
 import { InfoRequest } from "../request_info.model";
+import { User } from "./roles-perm/users/user.model";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable()
 export class RolePermissionsService{
-    constructor(private http:HttpClient, private csrf: DataCSRF){}
+    constructor(private http:HttpClient, private csrf: DataCSRF, private toastService: ToastrService){}
 
     private roles = new BehaviorSubject<Role[]>([]);
     roles$ = this.roles.asObservable();
@@ -22,16 +24,21 @@ export class RolePermissionsService{
                 next: (data: Role[])=>{
                     this.roles.next(data);
                 },
-                error: (error)=>{
-                    console.log(error);
+                error: (error: HttpErrorResponse)=>{
+                    this.toastService.error('No se han podido obtener los datos de los roles código de error: ' + error.status);
+                    console.error(error);
                 }
             }
         );
     }
 
-    //Petición get para obtener todos los registros de los permisos
+    //Petición get para obtener todos los registros de los permisos disponibles para un rol
     getPermissions(role: Role): Observable<Permission[]>{
         return this.http.get<Permission[]>(this.url + `/permissions/${role.id}`);
+    }
+
+    getRolesForUsers(user:User): Observable<Role[]>{
+        return this.http.get<Role[]>(`${this.url}/${user.id}/roles`);
     }
 
     //Petición post para añadir un registro de un role

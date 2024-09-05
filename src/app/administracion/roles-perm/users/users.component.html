@@ -73,14 +73,15 @@
                     <p class="text-sky-500">Este usuario no tiene roles asignados</p>
                 </div>
                 <div *ngIf="userFinded.roles.length>0">
-                    <p *ngFor="let role of userFinded.roles">{{role}}</p>
+                    <h2 class="font-semibold">Roles asignados a este usuario</h2>
+                    <p *ngFor="let role of userFinded.roles">{{role.name}}</p>
                 </div>
             </div>
             <div class="mt-6">
                 <h3 class="font-bold text-2xl">Opciones</h3>
                 <div class="flex justify-between">
                     <button (click)="deleteUser(userFinded)">Eliminar</button>
-                    <button>Modificar</button>
+                    <button (click)="selectUser(userFinded)">Modificar</button>
                 </div>
             </div>
         </div>

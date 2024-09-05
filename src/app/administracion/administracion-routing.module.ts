@@ -5,6 +5,7 @@ import { AdministracionComponent } from './administracion.component';
 import { NotfoundComponent } from '../notfound/notfound.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { RolesPermComponent } from './roles-perm/roles-perm.component';
+import { ModifyUserComponent } from '../modify-user/modify-user.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,9 @@ const routes: Routes = [
       {path:'index', component: InicioComponent},
       {path: 'categorias', component: CategoriasComponent},
       {path: 'permisos&roles', component: RolesPermComponent},
+      {path: 'user', children:[
+        {path: 'modify', component: ModifyUserComponent}
+      ]},
       {path: '**', component: NotfoundComponent}
     ]
   },

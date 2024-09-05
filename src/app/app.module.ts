@@ -15,6 +15,8 @@ import { FooterComponent } from './main/footer/footer.component';
 import { AdministracionModule } from './administracion/administracion.module';
 import { DataCSRF } from './dataCSRF.service';
 import { provideHttpClient } from '@angular/common/http';
+import { ModifyUserComponent } from './modify-user/modify-user.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { provideHttpClient } from '@angular/common/http';
     LoginComponent,
     NotfoundComponent,
     FooterComponent,
+    ModifyUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { provideHttpClient } from '@angular/common/http';
         cancelButtonText: 'Cancelar',
         animation: false,
       }))
-    })
+    }),
+    FormsModule
   ],
   providers: [
     DataCSRF,

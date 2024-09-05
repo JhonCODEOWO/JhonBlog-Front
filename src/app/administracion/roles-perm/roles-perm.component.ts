@@ -5,6 +5,7 @@ import { RolePermissionsService } from '../roles-permissions.service';
 import { Role } from '../role.model';
 import { User } from './users/user.model';
 import { UserServices } from './users/users.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-roles-perm',
@@ -12,7 +13,7 @@ import { UserServices } from './users/users.service';
   styleUrl: './roles-perm.component.css'
 })
 export class RolesPermComponent implements OnInit {
-  constructor(private generalData: general_data, private csrfService: DataCSRF, private rolespermissionService:RolePermissionsService, private userService: UserServices){}
+  constructor(private generalData: general_data, private csrfService: DataCSRF, private rolespermissionService:RolePermissionsService, private userService: UserServices, private toastService: ToastrService){}
   tittle: string = 'Roles y permisos';
   roles: Role[] = [];
   users: User[] = [];
@@ -40,7 +41,7 @@ export class RolesPermComponent implements OnInit {
         this.users = users;
       },
       error: (error)=>{
-        console.error(error);
+        
       }
     })
   }
