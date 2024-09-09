@@ -17,6 +17,7 @@ import { DataCSRF } from './dataCSRF.service';
 import { provideHttpClient } from '@angular/common/http';
 import { ModifyUserComponent } from './modify-user/modify-user.component';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from './login/login.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FormsModule } from '@angular/forms';
     DataCSRF,
     provideHttpClient(),
     provideAnimationsAsync(),
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

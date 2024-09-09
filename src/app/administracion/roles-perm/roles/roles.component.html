@@ -5,7 +5,7 @@
     </div>
     
     <swal #addElementSwal [swalOptions]="{confirmButtonText: 'Añadir'}" title="Añadir un nuevo rol"
-        [showCancelButton]="true" (confirm)="addRole()">
+        [showCancelButton]="true" (confirm)="addRole()" (dismiss)="clearData()">
         <form *swalPortal="swalTargets.content" action="" class="flex flex-col gap-y-3">
             <p *ngIf="name.length>15 && name!=undefined" class="text-red-500 text-sm text-start">No se permite un nombre con
                 más de 15 caracteres</p>
@@ -22,7 +22,7 @@
         <h3 class="font-medium text-2xl">Sin registros actualmente</h3>
     </div>
     
-    <div *ngIf="roles.length > 0">
+    <div *ngIf="roles.length > 0" class="pl-6 pr-6">
         <ul class="grid grid-cols-3 gap-6 mt-5">
             <li *ngFor="let role of roles" [ngClass]="{'bg-yellow-600': role.permissions.length==0, 'bg-green-500': role.permissions.length>0}"
                 class="text-lg flex items-center gap-x-3 justify-between p-2" [swal]="detallesRol" (click)="obtenerPermisos(role)">
@@ -40,7 +40,7 @@
     
                 <swal #modificarRole title="Modificando {{role.name}}"
                     [swalOptions]="{confirmButtonText: 'Aplicar cambios', cancelButtonText: 'Cancelar operación'}"
-                    [showCancelButton]="true" (confirm)="actualizarElemento(role)">
+                    [showCancelButton]="true" (confirm)="actualizarElemento(role)" (dismiss)="clearData()">
                     <form action="" *swalPortal="swalTargets.content" class="flex flex-col gap-y-3">
                         <div class="flex flex-col">
                             <label for="name" class="text-start">Nombre para el rol:</label>

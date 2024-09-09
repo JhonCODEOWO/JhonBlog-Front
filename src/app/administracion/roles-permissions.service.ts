@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http
 import { Permission } from "./permission.model";
 import { Role } from "./role.model";
 import { Inject, Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, switchMap } from "rxjs";
 import { DataCSRF } from "../dataCSRF.service";
 import { InfoRequest } from "../request_info.model";
 import { User } from "./roles-perm/users/user.model";
@@ -75,7 +75,11 @@ export class RolePermissionsService{
     }
 
     deleteRole(role:Role): Observable<InfoRequest>{
-        return this.http.delete<InfoRequest>(`${this.url}/delete/role/${role.id}`);
+        const headers = {
+            'X-CSRF-TOKEN': this.csrf.tokenActual
+        };
+
+        return this.http.delete<InfoRequest>(`${this.url}/delete/role/${role.id}`, {headers});
     }
 
     assignPermissionToRole(permission: Permission, role: Role): Observable<InfoRequest>{

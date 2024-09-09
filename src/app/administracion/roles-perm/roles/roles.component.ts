@@ -230,4 +230,10 @@ export class RolesComponent implements OnInit {
       });
     }
   }
+
+  //Control de dissmiss para los modales.
+  clearData(){
+    this.name = '';
+    this.description = '';
+  }
 }

@@ -1,6 +1,12 @@
 import { Component, Input, input } from '@angular/core';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { User } from '../administracion/roles-perm/users/user.model';
+import { LoginService } from '../login/login.service';
+import { InfoRequest } from '../request_info.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { DataCSRF } from '../dataCSRF.service';
 
 @Component({
   selector: 'app-header',
@@ -15,17 +21,31 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ])
   ]
 })
-export class HeaderComponent {
+export class HeaderComponent{
+  constructor(private loginService: LoginService, private toastService: ToastrService, private csrf: DataCSRF){}
   //Iconos usados
   faCaredDown = faCaretDown;
   faCaredUp = faCaretUp;
 
-  role: string = 'administrador';
-  @Input() logeado !:boolean;
+  role: string = '';
+  @Input() logeado !:boolean; //Estado de logeo
+  @Input() actualUser !: User | null; //Usuario proporcionado
   menuVisible: Boolean = false;
 
   deslogear(){
-    this.logeado=false;
+    this.loginService.logout().subscribe({
+      next: (response: InfoRequest)=>{
+        if (response.status == 'ok') {
+          this.logeado = false; //Quitar estado de logeo
+          this.loginService.setUser(null) //Quitar el usuario del servicio
+          this.csrf.getCsrfToken(); //Reasignar el nuevo csrf token
+          this.toastService.warning(response.message);
+        }
+      },
+      error: (error: HttpErrorResponse)=>{
+        this.toastService.error(`Ha ocurrido un error al llevar a cabo esta acción: ${error.status}`);
+      }
+    });
   }
 
   showMenu(){

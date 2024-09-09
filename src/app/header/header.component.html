@@ -5,14 +5,14 @@
     </a>
     <nav class="flex items-center pr-3 ol-3">
         <ul class="flex justify-between gap-6 text-xl font-normal" *ngIf="logeado==false">
-            <li> <a>Iniciar sesión</a></li>
+            <li> <a [routerLink]="['login']">Iniciar sesión</a></li>
             <li>Acerca de...</li>
         </ul>
         <ul class="flex justify-between gap-6 text-xl font-normal" *ngIf="logeado==true">
             <li class="cursor-pointer">
-                Nombre de usuario <fa-icon *ngIf="menuVisible==false" [icon]="faCaredDown" (click)="showMenu()"></fa-icon> <fa-icon *ngIf="menuVisible==true" [icon]="faCaredUp" (click)="showMenu()"></fa-icon>
+                {{actualUser?.name}} <fa-icon *ngIf="menuVisible==false" [icon]="faCaredDown" (click)="showMenu()"></fa-icon> <fa-icon *ngIf="menuVisible==true" [icon]="faCaredUp" (click)="showMenu()"></fa-icon>
                 <div *ngIf="menuVisible" class="absolute bg-slate-300 dark:bg-black z-10" @fadeInOut>
-                    <a *ngIf="role=='administrador'" [routerLink]="['admin/index']">Administración</a>
+                    <a [routerLink]="['admin/index']">Administración</a>
                     <li class="text-red-500 cursor-pointer" (click)="deslogear()">Cerrar sesión</li>
                 </div>
             </li>

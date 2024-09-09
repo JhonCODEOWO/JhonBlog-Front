@@ -10,5 +10,5 @@ export class User{
     created_at:Date|string = '';
     updated_at:Date|string = '';
     roles:Role[] = [];
-    profiles:Role[] = [];
+    // profiles:Role[] = [];
 }
