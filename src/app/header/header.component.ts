@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DataCSRF } from '../dataCSRF.service';
 import { Permission } from '../administracion/permission.model';
 import { Utils } from '../utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +25,7 @@ import { Utils } from '../utils';
   ]
 })
 export class HeaderComponent{
-  constructor(private loginService: LoginService, private toastService: ToastrService, private csrf: DataCSRF){}
+  constructor(private loginService: LoginService, private toastService: ToastrService, private csrf: DataCSRF, private router: Router){}
   //Iconos usados
   faCaredDown = faCaretDown;
   faCaredUp = faCaretUp;
@@ -41,8 +42,10 @@ export class HeaderComponent{
         if (response.status == 'ok') {
           this.logeado = false; //Quitar estado de logeo
           this.loginService.setUser(null) //Quitar el usuario del servicio
+          this.loginService.userPermissions.next(null); // Vacíar los datos de los permisos
           this.csrf.getCsrfToken(); //Reasignar el nuevo csrf token
           this.toastService.warning(response.message);
+          this.router.navigate(['']);
         }
       },
       error: (error: HttpErrorResponse)=>{

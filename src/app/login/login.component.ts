@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
         next: (response: User|InfoRequest)=>{
           //Verificar que tipo de objeto se ha recibido
           if ('name' in response) { //Si name existe en la respuesta quiere decir que es un objeto de usuario
+            console.log(response);
             this.loginService.setUser(response); //Aplicar el usuario actual por medio del servicio login.service
             this.loginService.setPermissions(response); //Recorrer roles y almacenar los permisos en un arreglo del servicio
             this.csrf.getCsrfToken(); // Tomamos nuevamente el token pues ahora ya ha cambiado

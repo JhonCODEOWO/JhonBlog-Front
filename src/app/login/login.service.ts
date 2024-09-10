@@ -45,6 +45,15 @@ export class LoginService{
         return this.httpClient.delete<InfoRequest>(`${this.url}/logout`, {headers});
     }
 
+    /**
+ * Verifica si un usuario está autenticado
+ * 
+ * @returns `true` si el userLogged es diferente de null y `false` si ese valor esta vacío dando a entender que no hay nadie logeado.
+ */
+    isAutenticated(): boolean{
+        return (this.userLogged.getValue()==null)?false:true;
+    }
+
     //Método para colocar el objeto usuario en nuestro behavior subject
     setUser(user: User | null){
         this.userLogged.next(user);

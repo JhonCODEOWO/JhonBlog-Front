@@ -18,6 +18,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { ModifyUserComponent } from './modify-user/modify-user.component';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login/login.service';
+import { LoginGuard } from './login/loginGuard.service';
+import { CreateacountComponent } from './login/createacount/createacount.component';
+import { CreateprofileComponent } from './login/createprofile/createprofile.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,8 @@ import { LoginService } from './login/login.service';
     NotfoundComponent,
     FooterComponent,
     ModifyUserComponent,
+    CreateacountComponent,
+    CreateprofileComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +56,8 @@ import { LoginService } from './login/login.service';
     DataCSRF,
     provideHttpClient(),
     provideAnimationsAsync(),
-    LoginService
+    LoginService,
+    LoginGuard
   ],
   bootstrap: [AppComponent]
 })

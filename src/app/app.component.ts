@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy{
         next: (user: User | null)=>{
           //Si el usuario es diferente de nulo es porque ya hay algo logeado
           if (user != null) {
-            this.logeado = true;
+            this.logeado = this.loginService.isAutenticated();
             this.user = user;
           }else{
             this.logeado = false;

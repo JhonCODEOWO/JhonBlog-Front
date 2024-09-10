@@ -1,4 +1,5 @@
 import { Role } from "../../role.model";
+import { Profile } from "./profile.model";
 
 export class User{
     id:number = -1;
@@ -10,5 +11,5 @@ export class User{
     created_at:Date|string = '';
     updated_at:Date|string = '';
     roles:Role[] = [];
-    // profiles:Role[] = [];
+    profile:Profile | null = null;
 }
