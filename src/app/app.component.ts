@@ -4,6 +4,9 @@ import { DataCSRF } from './dataCSRF.service';
 import { Csrf } from './csrf.model';
 import { LoginService } from './login/login.service';
 import { User } from './administracion/roles-perm/users/user.model';
+import { Permission } from './administracion/permission.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +18,9 @@ export class AppComponent implements OnInit, OnDestroy{
   title = 'jhonblog-frontend';
   logeado: boolean = false;
   user: User|null = null;
+  permissions: Permission[] | null = null;
 
-  constructor(private csrfService:DataCSRF, private loginService: LoginService){}
+  constructor(private csrfService:DataCSRF, private loginService: LoginService, private toastService: ToastrService){}
   
   ngOnInit(): void {
       this.csrfService.getCsrfToken();
@@ -32,6 +36,16 @@ export class AppComponent implements OnInit, OnDestroy{
             this.logeado = false;
             this.user = null;
           }
+        }
+      })
+
+      //Suscripción para obtener los permisos almacenados en un usuario
+      this.loginService.userPermissions$.subscribe({
+        next: (permissions: Permission[] | null)=>{
+          this.permissions=permissions;
+        },
+        error: (error: HttpErrorResponse)=>{
+          this.toastService.error(`Ha ocurrido un error al obtener los datos de los permisos desde login.service -> userPermissions$ ${error.message}`);
         }
       })
   }

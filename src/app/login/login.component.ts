@@ -36,11 +36,12 @@ export class LoginComponent implements OnInit {
           //Verificar que tipo de objeto se ha recibido
           if ('name' in response) { //Si name existe en la respuesta quiere decir que es un objeto de usuario
             this.loginService.setUser(response); //Aplicar el usuario actual por medio del servicio login.service
+            this.loginService.setPermissions(response); //Recorrer roles y almacenar los permisos en un arreglo del servicio
             this.csrf.getCsrfToken(); // Tomamos nuevamente el token pues ahora ya ha cambiado
             this.message = ''; //Vacíar el mensaje, para asegurarnos de que siempre esté vacío si ya se ha logeado.
             this.router.navigate(['/']); //Redireccionar a la página inicial
           }else{ //Si la declaración anterior da false es porque es un objeto InfoRequest
-            this.message = response.message; //Almacenar el resultado del error en el mensaje.
+            this.message = response.message; //Almacenar el resultado del error en el mensaje
           }
         },
         error: (error: HttpErrorResponse)=>{

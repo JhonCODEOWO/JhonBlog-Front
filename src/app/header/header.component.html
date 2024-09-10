@@ -12,7 +12,8 @@
             <li class="cursor-pointer">
                 {{actualUser?.name}} <fa-icon *ngIf="menuVisible==false" [icon]="faCaredDown" (click)="showMenu()"></fa-icon> <fa-icon *ngIf="menuVisible==true" [icon]="faCaredUp" (click)="showMenu()"></fa-icon>
                 <div *ngIf="menuVisible" class="absolute bg-slate-300 dark:bg-black z-10" @fadeInOut>
-                    <a [routerLink]="['admin/index']">Administración</a>
+                    <a *ngIf="findPermission('admin_access')" [routerLink]="['admin/index']">Administración</a>
+                    <a href="">Visualizar perfil</a>
                     <li class="text-red-500 cursor-pointer" (click)="deslogear()">Cerrar sesión</li>
                 </div>
             </li>

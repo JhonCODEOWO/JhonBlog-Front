@@ -7,6 +7,8 @@ import { InfoRequest } from '../request_info.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { DataCSRF } from '../dataCSRF.service';
+import { Permission } from '../administracion/permission.model';
+import { Utils } from '../utils';
 
 @Component({
   selector: 'app-header',
@@ -30,6 +32,7 @@ export class HeaderComponent{
   role: string = '';
   @Input() logeado !:boolean; //Estado de logeo
   @Input() actualUser !: User | null; //Usuario proporcionado
+  @Input() userPermissions !: Permission[] | null; //Permisos proporcionados
   menuVisible: Boolean = false;
 
   deslogear(){
@@ -54,5 +57,9 @@ export class HeaderComponent{
     }else{
       this.menuVisible = true;
     }
+  }
+
+  findPermission(permission: string): boolean{
+    return Utils.findPermission(permission, this.userPermissions);
   }
 }
