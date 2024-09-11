@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { DataCSRF } from "../dataCSRF.service";
 import { Permission } from "../administracion/permission.model";
 import { Role } from "../administracion/role.model";
+import { Profile } from "../administracion/roles-perm/users/profile.model";
 
 @Injectable()
 export class LoginService{
@@ -74,5 +75,18 @@ export class LoginService{
         //Eliminar duplicados
         this.userPermissions.next(permissionsObtained);
         console.log(permissionsObtained);
+    }
+
+    setProfile(profile: Profile){
+        const actualUser: User | null = this.userLogged.getValue();
+
+        //Asignar el perfil al usuario
+        if(actualUser){
+            actualUser.profile = profile; //Asignar el objeto profile
+            this.userLogged.next(actualUser); //Actualizar los cambios en el behaviorsubject
+            console.log(this.userLogged.getValue());
+        }else{
+            this.toastService.error('No se ha podido asignar correctamente el perfil al usuario');
+        }
     }
 }

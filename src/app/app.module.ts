@@ -21,6 +21,7 @@ import { LoginService } from './login/login.service';
 import { LoginGuard } from './login/loginGuard.service';
 import { CreateacountComponent } from './login/createacount/createacount.component';
 import { CreateprofileComponent } from './login/createprofile/createprofile.component';
+import { ProfileServices } from './administracion/roles-perm/users/profile.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { CreateprofileComponent } from './login/createprofile/createprofile.comp
     provideHttpClient(),
     provideAnimationsAsync(),
     LoginService,
-    LoginGuard
+    LoginGuard,
+    ProfileServices
   ],
   bootstrap: [AppComponent]
 })

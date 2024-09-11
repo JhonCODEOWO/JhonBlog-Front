@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: '', component:MainComponent},
   {path: 'login', component:LoginComponent},
   {path: 'createacount', component:CreateacountComponent},
-  {path: 'createprofile', component:CreateprofileComponent},
+  {path: 'createprofile', canActivate: [LoginGuard],component:CreateprofileComponent},
   {path: 'admin', canActivate: [LoginGuard], loadChildren: ()=> import('./administracion/administracion.module').then(m => m.AdministracionModule)},
   //Rutas para el control de un usuario
   {path: 'user', children: [

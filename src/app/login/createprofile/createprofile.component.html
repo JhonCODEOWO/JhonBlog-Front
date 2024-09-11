@@ -10,14 +10,21 @@
             </div>
             <div class="flex flex-col">
                 <label for="name">Nombre:</label>
-                <input type="text" required id="name"  class="focus:outline-none bg-slate-300 dark:bg-neutral-700 p-1" [(ngModel)]="nameprofile" name="name">
-                <p *ngIf="nameprofile==''" class="text-sm font-normal">Coloca un nombre para la cuenta (Este nombre no será público)</p>
+                <input type="text" required id="name"  class="focus:outline-none bg-slate-300 dark:bg-neutral-700 p-1" [(ngModel)]="profile.name" name="name">
+                <p *ngIf="profile.name==''" class="text-sm font-normal">Coloca un nombre para la cuenta (Este nombre no será público)</p>
             </div>
             <div class="flex flex-col">
-                <label for="name">Apellidos:</label>
-                <input type="text" required id="name"  class="focus:outline-none bg-slate-300 dark:bg-neutral-700 p-1" [(ngModel)]="nameprofile" name="name">
-                <p *ngIf="nameprofile==''" class="text-sm font-normal">Coloca un nombre para la cuenta (Este nombre no será público)</p>
+                <label for="last_name">Apellidos:</label>
+                <input type="text" required id="last_name"  class="focus:outline-none bg-slate-300 dark:bg-neutral-700 p-1" [(ngModel)]="profile.last_name" name="last_name">
+                <p *ngIf="profile.last_name==''" class="text-sm font-normal">Coloca un nombre para la cuenta (Este nombre no será público)</p>
+            </div>
+            <div class="flex flex-col">
+                <label for="biography">Escribe una pequeña biografía sobre ti:</label>
+                <textarea name="biography" id="biography" class="focus:outline-none bg-slate-300 dark:bg-neutral-700 p-1" [(ngModel)]="profile.biography" name="biografia" required></textarea>
+                <p *ngIf="profile.biography==''" class="text-sm font-normal">Coloca un nombre para la cuenta (Este nombre no será público)</p>
             </div>
         </div>
+
+        <button type="submit" *ngIf="validarDatos()" class="mt-3 p-3 bg-blue-800">Crear cuenta</button>
     </form>
 </div>
