@@ -62,6 +62,15 @@ export class HeaderComponent{
     }
   }
 
+  getImageFromServer(pathPhoto:string|null|undefined): string{
+    if (pathPhoto) {
+      const serverurl = Utils.getUrlServer();
+      let urlImage = Utils.getUrlResourceFromServer(serverurl, pathPhoto);
+      return urlImage;
+    }
+    return '';
+  }
+
   findPermission(permission: string): boolean{
     return Utils.findPermission(permission, this.userPermissions);
   }

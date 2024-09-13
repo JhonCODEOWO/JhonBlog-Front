@@ -10,7 +10,11 @@
         </ul>
         <ul class="flex justify-between gap-6 text-xl font-normal" *ngIf="logeado==true">
             <li class="cursor-pointer">
-                {{actualUser?.name}} <fa-icon *ngIf="menuVisible==false" [icon]="faCaredDown" (click)="showMenu()"></fa-icon> <fa-icon *ngIf="menuVisible==true" [icon]="faCaredUp" (click)="showMenu()"></fa-icon>
+                <p class="flex">
+                    <img [src]="getImageFromServer(actualUser?.profile?.profile_photo)" alt="" class="w-full">
+                    <span>{{actualUser?.name}}</span>
+                </p>
+                <fa-icon *ngIf="menuVisible==false" [icon]="faCaredDown" (click)="showMenu()"></fa-icon> <fa-icon *ngIf="menuVisible==true" [icon]="faCaredUp" (click)="showMenu()"></fa-icon>
                 <div *ngIf="menuVisible" class="absolute bg-slate-300 dark:bg-black z-10 flex flex-col" @fadeInOut>
                     <a *ngIf="findPermission('admin_access')" [routerLink]="['admin/index']">Administración</a>
                     <a *ngIf="actualUser?.profile">Visualizar perfil</a>

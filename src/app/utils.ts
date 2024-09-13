@@ -16,4 +16,22 @@ export class Utils {
             return false;
         }
     }
+    
+
+    static getUrlServer(): string{
+        const serverurl = `http://localhost:8088`;
+        return serverurl;
+    }
+
+    /**
+     * Obtiene la url de acceso a un recurso en el backend
+     * 
+     * @param urlServer - Debe ser el dominio del servidor.
+     * @param pathResource - Debe ser la ruta de acceso a un recurso
+     * @returns La url de acceso a un recurso en el servidor.
+     */
+    static getUrlResourceFromServer(urlServer: string, pathResource: string):string{
+        const urlResource = `${urlServer}/${pathResource}`;
+        return urlResource;
+    }
 }
