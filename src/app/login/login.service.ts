@@ -55,6 +55,20 @@ export class LoginService{
         return (this.userLogged.getValue()==null)?false:true;
     }
 
+    /**
+     * Verifica si el usuario enviado como parámetro es el mismo que el que esta logeado.
+     * 
+     * user - Usuario deseado a comparar con el usuarioLogeado.
+     * 
+     * @returns `true` si el userLogged es diferente de null y `false` si ese valor esta vacío dando a entender que no hay nadie logeado.
+     */
+    matchWithUserLogged(user: User): boolean{
+        if (this.userLogged.getValue()!= null) {
+            return this.userLogged.getValue()?.id === user.id;
+        }
+        return false;
+    }
+
     //Método para colocar el objeto usuario en nuestro behavior subject
     setUser(user: User | null){
         this.userLogged.next(user);

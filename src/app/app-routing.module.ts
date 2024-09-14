@@ -9,12 +9,15 @@ import { ModifyUserComponent } from './modify-user/modify-user.component';
 import { LoginGuard } from './login/loginGuard.service';
 import { CreateacountComponent } from './login/createacount/createacount.component';
 import { CreateprofileComponent } from './login/createprofile/createprofile.component';
+import { ViewProfileComponent } from './view-profile/view-profile.component';
 
 const routes: Routes = [
   {path: '', component:MainComponent},
   {path: 'login', component:LoginComponent},
-  {path: 'createacount', component:CreateacountComponent},
-  {path: 'createprofile', canActivate: [LoginGuard],component:CreateprofileComponent},
+  {path: 'profile/view/:id', component:ViewProfileComponent},
+  {path: 'createacount', canActivate: [LoginGuard], component:CreateacountComponent},
+  {path: 'createprofile', canActivate: [LoginGuard],component:CreateprofileComponent}, //Acceder a CreateProfile pero en modo de creación
+  {path: 'profile/edit/:id', canActivate: [LoginGuard],component:CreateprofileComponent}, //Ruta para acceder al componente createprofile pero en modo edición
   {path: 'admin', canActivate: [LoginGuard], loadChildren: ()=> import('./administracion/administracion.module').then(m => m.AdministracionModule)},
   //Rutas para el control de un usuario
   {path: 'user', children: [

@@ -22,6 +22,7 @@ import { LoginGuard } from './login/loginGuard.service';
 import { CreateacountComponent } from './login/createacount/createacount.component';
 import { CreateprofileComponent } from './login/createprofile/createprofile.component';
 import { ProfileServices } from './administracion/roles-perm/users/profile.service';
+import { ViewProfileComponent } from './view-profile/view-profile.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ProfileServices } from './administracion/roles-perm/users/profile.servi
     ModifyUserComponent,
     CreateacountComponent,
     CreateprofileComponent,
+    ViewProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,16 @@
-<div class="absolute w-full" class="flex justify-center mt-8">
-    <form action="" #FProfile="ngForm" (ngSubmit)="onSubmit(FProfile)" class="bg-slate-500 dark:bg-neutral-800 text-black dark:text-white p-8 w-2/5 overflow-auto" style="height: 30rem;">
-        <h2 class="font-black text-4xl">Crear perfil para la cuenta</h2>
+<div class="absolute w-full" class="flex justify-center mt-8 mb-8">
+    <form action="" *ngIf="profile" #FProfile="ngForm" (ngSubmit)="onSubmit(FProfile)" class="bg-slate-500 dark:bg-neutral-800 text-black dark:text-white p-8 w-2/5 overflow-auto" style="height: 30rem;">
+        <h2 class="font-black text-4xl">{{title}}</h2>
         <p>Los datos ingresados aquí serán públicos.</p>
         <div class="mt-3 flex flex-col gap-y-3 font-light text-lg">
+            <div class="flex flex-col text-center" *ngIf="editing">
+                <label>Imagen actual de perfil</label>
+                <img [src]="getResourceFromServer(profile.profile_photo)" alt="" class="rounded-full w-36">
+            </div>
             <div class="flex flex-col">
-                <label for="imagen_perfil">Foto de perfil</label>
+                <label for="imagen_perfil">Foto de perfil <span *ngIf="editing">(No obligatorio)</span></label>
                 <img [src]="imagen_url" alt="">
-                <input type="file" name="imagen_perfil" id="imagen_perfil" (change)="onFileSelected($event)">
+                <input type="file" name="imagen_perfil" id="imagen_perfil" (change)="onFileSelected($event)" required>
             </div>
             <div class="flex flex-col">
                 <label for="name">Nombre:</label>
@@ -25,6 +29,11 @@
             </div>
         </div>
 
-        <button type="submit" *ngIf="validarDatos()" class="mt-3 p-3 bg-blue-800">Crear cuenta</button>
+        <button type="submit" *ngIf="validarDatosOnCreate() && editing ==false" class="mt-3 p-3 bg-blue-800">Crear cuenta</button>
+        <button type="submit" *ngIf="validarDatosOnEdit() && editing == true" class="mt-3 p-3 bg-yellow-800">Modificar datos</button>
     </form>
+
+    <div *ngIf="!profile">
+        <p>El usuario no se ha podido encontrar</p>
+    </div>
 </div>

@@ -11,7 +11,7 @@ export class User{
     created_at:Date|string = '';
     updated_at:Date|string = '';
     roles:Role[] = [];
-    public profile:Profile | null = null;
+    profile:Profile | null = null;
 
     constructor(id: number, name:string, email:string, email_verified_at: Date|string = '', password:string, remember_token: string = '', created_at: Date, updated_at:Date, roles: Role[]  = [], profile: Profile | null = null){
         this.id = id;

@@ -35,6 +35,10 @@ export class UserServices{
         });
     }
 
+    getUser(id: number): Observable<User>{
+        return this.httpClient.get<User>(`${this.url}/user/${id}`);
+    }
+
     addUser(name:string, email:string, password:string): Observable<InfoRequest>{
         const body = {
             name: name,
