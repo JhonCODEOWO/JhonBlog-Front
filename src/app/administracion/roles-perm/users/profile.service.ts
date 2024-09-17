@@ -33,10 +33,16 @@ export class ProfileServices{
         return this.httpClient.post<InfoRequest>(`${this.url}/create`, formData, {headers});
     }
 
-    modifyProfile(profile: Profile, profile_photo: File | null = null){
+    modifyProfile(profile: Profile, profile_photo: File | null = null): Observable<InfoRequest>{
+        let headers = {
+            'X-CSRF-TOKEN': this.csrf.tokenActual,
+        };
+
         const formData = new FormData();
         const userId: number | undefined = this.loginService.userLogged.getValue()?.id;//Obtenemos el id del usuario logeado.
 
+        formData.append('_method', 'PUT');
+        //Si el usuario está declarado...
         if (userId) {
             formData.append('name', profile.name??'');
             formData.append('last_name', profile.last_name??'');
@@ -49,13 +55,9 @@ export class ProfileServices{
 
             formData.append('user_id', userId.toString());
         }
-
-        let headers = {
-            'X-CSRF-TOKEN': this.csrf.tokenActual,
-        };
-
+        
         console.log(formData);
         //Pendiente de realizar las pruebas y programación del lado del backend, además de seguir analizando la lógica.
-        // return this.httpClient.post<InfoRequest>(`${this.url}/modify`, formData, {headers});
+        return this.httpClient.post<InfoRequest>(`${this.url}/${profile.id}/modify`, formData, {headers});
     }
 }

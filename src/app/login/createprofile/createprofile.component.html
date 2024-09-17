@@ -9,7 +9,7 @@
             </div>
             <div class="flex flex-col">
                 <label for="imagen_perfil">Foto de perfil <span *ngIf="editing">(No obligatorio)</span></label>
-                <img [src]="imagen_url" alt="">
+                <img [src]="imagen_url" alt="" class="rounded-full w-36">
                 <input type="file" name="imagen_perfil" id="imagen_perfil" (change)="onFileSelected($event)" required>
             </div>
             <div class="flex flex-col">
@@ -24,7 +24,7 @@
             </div>
             <div class="flex flex-col">
                 <label for="biography">Escribe una pequeña biografía sobre ti:</label>
-                <textarea name="biography" id="biography" class="focus:outline-none bg-slate-300 dark:bg-neutral-700 p-1" [(ngModel)]="profile.biography" name="biografia" required></textarea>
+                <textarea name="biography" id="biography" class="focus:outline-none bg-slate-300 dark:bg-neutral-700 p-1" [(ngModel)]="profile.biography" name="biografia" required rows="10"></textarea>
                 <p *ngIf="profile.biography==''" class="text-sm font-normal">Coloca un nombre para la cuenta (Este nombre no será público)</p>
             </div>
         </div>

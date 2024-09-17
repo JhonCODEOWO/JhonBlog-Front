@@ -22,7 +22,13 @@ export class LoginService{
 
     url: string = "http://localhost:8088/api/user"; //Url para realizar las peticiones de login y logout
 
-    //Petición al backend para intentar realizar el login
+    /**
+     * Realiza la instancia de una petición para el servidor que realiza el login de un usuario
+     * 
+     * @param email-  Correo del usuario.
+     * @param password - Contraseña del usuario
+     * @returns Obserbvable<User|InfoRequest> - Si el logeo es exitoso se recibe la instancia del usuario para poder usarla en userLogged en caso contrarion se recibe un InfoRequest con el mensaje del error.
+     */
     login(email: string, password: string):Observable<User|InfoRequest>{
         //Prepare the header to be placed in the request
         let headers = {
@@ -38,6 +44,12 @@ export class LoginService{
         return this.httpClient.post<User|InfoRequest>(`${this.url}/login`, peticion, {headers});
     }
 
+
+    /**
+     * Realiza una petición al backend para destruir una sesión de un usuario logeado.
+     * 
+     * @returns Obserbvable<InfoRequest> - Se devuelve una instancia InfoRequest que puede contener un status, en base a si la solicitud se completó exitosamente.
+     */
     logout(): Observable<InfoRequest>{
         //Prepare the header to be placed in the request
         let headers = {
@@ -69,36 +81,45 @@ export class LoginService{
         return false;
     }
 
-    //Método para colocar el objeto usuario en nuestro behavior subject
+        /**
+ * Asigna una instancia de User hacia userLogged.
+ * 
+ * @param user -  Usuario que se desea asignar.
+ */
     setUser(user: User | null){
         this.userLogged.next(user);
     }
 
-    //Recorre los roles y asigna cada permiso existente en el hacia userPermissions
+    /**
+ * Recorre los roles de un user y los permissions se transfieren hacia userPermissions.
+ * 
+ * @param user -  Instancia de una clase User que debe tener cargados valores en permissions.
+ */
     setPermissions(user: User){
-        console.log(user);
         let permissionsObtained: Permission[] = [];
         user.roles.forEach((role: Role)=>{
             role.permissions.forEach((permission: Permission)=>{
                 //No colocar dos veces el mismo objeto para evitar dupliados usando el método some: recibe un callback en donde la primera variable representa un objeto contenido en el arreglo, y su comparativa un objeto que va a ingresar.
-                if (!permissionsObtained.some( p => p.id == permission.id)) {
+                if (!permissionsObtained.some( permissionExist => permissionExist.id == permission.id)) {
                     permissionsObtained.push(permission); //Añade el permiso a permissionsObtained
                 }
             })
         })
-        //Eliminar duplicados
-        this.userPermissions.next(permissionsObtained);
-        console.log(permissionsObtained);
+        this.userPermissions.next(permissionsObtained); // Asignar valores hacia userPermissions
     }
 
+    /**
+     * Coloca una nueva instancia de profile dentro de userLogged
+     * 
+     * @param profile -  Nueva instancia de profile a asignar.
+     */
     setProfile(profile: Profile){
-        const actualUser: User | null = this.userLogged.getValue();
+        const actualUser: User | null = this.userLogged.getValue(); //Obtiene el valor actual del usuario logeado
 
-        //Asignar el perfil al usuario
+        //Si actualUser es diferente de null
         if(actualUser){
             actualUser.profile = profile; //Asignar el objeto profile
-            this.userLogged.next(actualUser); //Actualizar los cambios en el behaviorsubject
-            console.log(this.userLogged.getValue());
+            this.userLogged.next(actualUser); //Actualizar los cambios en el behaviorsubject para sincrinizarlos
         }else{
             this.toastService.error('No se ha podido asignar correctamente el perfil al usuario');
         }

@@ -39,9 +39,8 @@ export class CreateprofileComponent implements OnInit{
             this.editing = true;
           }
         }else{ //Si no se está editando..
-          this.profile = new Profile(); //Sw crea una instancia vacía de profile.
+          this.profile = new Profile(); //Se crea una instancia vacía de profile pues es la que usaremos para el data binding de creación de nuevo perfil.
         }
-        console.log(this.profile);
     }
 
     onSubmit(form: NgForm){
@@ -52,7 +51,7 @@ export class CreateprofileComponent implements OnInit{
             break;
         
           case true:
-            console.log('Editando');
+            this.editProfile();
             break;
           default:
             break;
@@ -121,7 +120,20 @@ export class CreateprofileComponent implements OnInit{
 
     editProfile(){
       if (this.profile) {
-        this.profileService.modifyProfile(this.profile, this.imagen_perfil);
+        this.profileService.modifyProfile(this.profile, this.imagen_perfil).subscribe({
+          next: (response: InfoRequest | Profile)=>{
+            if ('status' in response) {
+              this.toastService.success(`Ha ocurrido un error mientras se realizaba la solicitud ${response.message}`);
+            }else{
+              /* Realizar todas las operaciones al saber que han cambiado los datos del perfil logeado */
+              this.loginService.setProfile(response); //Actualizar los datos igual en el perfil actual del frontend
+              this.router.navigate(['']); //Redireccionar hacia la pantalla de visualización de perfil nuevamente
+            }
+          },
+          error: (error: HttpErrorResponse)=>{
+            this.toastService.error(`Ha ocurrido un error al procesar la solicitud ${error.status}`);
+          }
+        })
       }
     }
 
