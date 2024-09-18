@@ -19,5 +19,9 @@
             <a [routerLink]="['/createacount']">Crear cuenta nueva</a>
         </div>
         <button type="submit" class="mt-8 w-full bg-sky-400 dark:bg-blue-600 p-3 disabled:bg-blue-950 disabled:line-through" [disabled]="!validarDatos()">Iniciar sesión</button>
+        <div class="flex flex-row-reverse items-center gap-x-3 mt-3">
+            <input type="checkbox" name="permanent_session" id="permanent_session" (click)="applyPermanentSession()">
+            <label for="">¿Mantener sesión abierta?</label>
+        </div>
     </form>
 </div>

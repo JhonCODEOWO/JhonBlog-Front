@@ -16,6 +16,7 @@ import { RolesComponent } from './roles-perm/roles/roles.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UsersComponent } from './roles-perm/users/users.component';
 import { UserServices } from './roles-perm/users/users.service';
+import { CategoriesService } from './categorias/categories.service';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { UserServices } from './roles-perm/users/users.service';
   providers: [
     general_data,
     RolePermissionsService,
-    UserServices
+    UserServices,
+    CategoriesService
   ]
 })
 export class AdministracionModule { }

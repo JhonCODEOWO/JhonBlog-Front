@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: '', component:MainComponent},
   {path: 'login', component:LoginComponent},
   {path: 'profile/view/:id', component:ViewProfileComponent},
-  {path: 'createacount', canActivate: [LoginGuard], component:CreateacountComponent},
+  {path: 'createacount', component:CreateacountComponent},
   {path: 'createprofile', canActivate: [LoginGuard],component:CreateprofileComponent}, //Acceder a CreateProfile pero en modo de creación
   {path: 'profile/edit/:id', canActivate: [LoginGuard],component:CreateprofileComponent}, //Ruta para acceder al componente createprofile pero en modo edición
   {path: 'admin', canActivate: [LoginGuard], loadChildren: ()=> import('./administracion/administracion.module').then(m => m.AdministracionModule)},

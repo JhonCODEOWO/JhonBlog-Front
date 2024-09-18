@@ -2,12 +2,13 @@ import { HttpClient } from "@angular/common/http";
 import { Csrf } from "./csrf.model";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Injectable } from "@angular/core";
+import { Utils } from "./utils";
 
 @Injectable()
 export class DataCSRF{
     tokenActual: string = ''; //Propiedad encargada de almacenar el token csrf actual
     private xsrfUrl = 'http://localhost:8088/sanctum/csrf-cookie'; //Ruta para obtener un xsrf token el cual incrusta una cookie, es necesario tener en laravel sanctum, es ideal para proyectos de angular que están hosteados en distintos dominios a laravel
-    private csrfUrl = `http://localhost:8088/api/getCSRF`; //Petición de csrf para laravel, debes de hostear el proyecto de Angular desde el servidor de Laravel para que funcionen estos tokens es decir, es para peticiones desde el mismo dominio.
+    private csrfUrl = `${Utils.api_url}/getCSRF`; //Petición de csrf para laravel, debes de hostear el proyecto de Angular desde el servidor de Laravel para que funcionen estos tokens es decir, es para peticiones desde el mismo dominio.
     constructor(private http:HttpClient){}
 
 

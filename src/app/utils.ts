@@ -2,6 +2,7 @@ import { Permission } from './administracion/permission.model';
 
 export class Utils {
 
+    static api_url:string = 'http://localhost:8088/api'; // Url general del servidor de backend
         /**
      * Verifica si un permiso está presente en el arreglo de permisos.
      * 

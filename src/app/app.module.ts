@@ -23,6 +23,7 @@ import { CreateacountComponent } from './login/createacount/createacount.compone
 import { CreateprofileComponent } from './login/createprofile/createprofile.component';
 import { ProfileServices } from './administracion/roles-perm/users/profile.service';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
     CreateacountComponent,
     CreateprofileComponent,
     ViewProfileComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,13 +5,14 @@ import { DataCSRF } from "../../../dataCSRF.service";
 import { LoginService } from "../../../login/login.service";
 import { Observable } from "rxjs";
 import { InfoRequest } from "../../../request_info.model";
+import { Utils } from "../../../utils";
 
 @Injectable()
 export class ProfileServices{
     constructor(private httpClient:HttpClient, private csrf: DataCSRF, private loginService: LoginService){}
 
     
-    url: string = `http://localhost:8088/api/profile`;
+    url: string = `${Utils.api_url}/profile`;
 
     createProfile(profile: Profile,  profile_photo: File):Observable<InfoRequest>{
         const formData = new FormData();

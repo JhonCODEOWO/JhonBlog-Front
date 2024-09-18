@@ -7,6 +7,7 @@ import { DataCSRF } from "../dataCSRF.service";
 import { InfoRequest } from "../request_info.model";
 import { User } from "./roles-perm/users/user.model";
 import { ToastrService } from "ngx-toastr";
+import { Utils } from "../utils";
 
 @Injectable()
 export class RolePermissionsService{
@@ -15,11 +16,11 @@ export class RolePermissionsService{
     private roles = new BehaviorSubject<Role[]>([]);
     roles$ = this.roles.asObservable();
 
-    private url =  `http://localhost:8088/api`;
+    private url =  Utils.api_url;
 
     //Peticion get para obtener todos los registros de roles
     getRoles(){
-        this.http.get<Role[]>(this.url + '/roles').subscribe(
+        this.http.get<Role[]>(this.url + '/roles', {withCredentials: true}).subscribe(
             {
                 next: (data: Role[])=>{
                     this.roles.next(data);

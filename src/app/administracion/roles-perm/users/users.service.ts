@@ -6,6 +6,7 @@ import { InfoRequest } from "../../../request_info.model";
 import { DataCSRF } from "../../../dataCSRF.service";
 import { Role } from "../../role.model";
 import { ToastrService } from "ngx-toastr";
+import { Utils } from "../../../utils";
 
 @Injectable()
 export class UserServices{
@@ -17,7 +18,7 @@ export class UserServices{
     private selectedUser = new BehaviorSubject<User | undefined>(undefined);
     selectedUser$ = this.selectedUser.asObservable();
 
-    private url =  `http://localhost:8088/api`;
+    private url =  `${Utils.api_url}`;
 
     setSelectedUser(user: User){
         return this.selectedUser.next(user);

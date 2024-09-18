@@ -41,8 +41,7 @@ export class HeaderComponent{
       next: (response: InfoRequest)=>{
         if (response.status == 'ok') {
           this.logeado = false; //Quitar estado de logeo
-          this.loginService.setUser(null) //Quitar el usuario del servicio
-          this.loginService.userPermissions.next(null); // Vacíar los datos de los permisos
+          this.loginService.clearSession() //Eliminar usuario y permisos en el servicio
           this.csrf.getCsrfToken(); //Reasignar el nuevo csrf token
           this.toastService.warning(response.message);
           this.router.navigate(['']);

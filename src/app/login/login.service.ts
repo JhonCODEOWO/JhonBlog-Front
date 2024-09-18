@@ -8,19 +8,20 @@ import { DataCSRF } from "../dataCSRF.service";
 import { Permission } from "../administracion/permission.model";
 import { Role } from "../administracion/role.model";
 import { Profile } from "../administracion/roles-perm/users/profile.model";
+import { Utils } from "../utils";
 
 @Injectable()
 export class LoginService{
     constructor(private toastService: ToastrService, private csrfService: DataCSRF,private httpClient: HttpClient){}
 
     //Objeto usado para poder almacenar los datos de un usuario que si ha podido logearse
-    userLogged = new BehaviorSubject<User|null>(null);
+    userLogged = new BehaviorSubject<User|null>(this.getPermanentSession());
     userLogged$ = this.userLogged.asObservable();
 
     userPermissions = new BehaviorSubject<Permission[]|null>(null);
     userPermissions$ = this.userPermissions.asObservable();
 
-    url: string = "http://localhost:8088/api/user"; //Url para realizar las peticiones de login y logout
+    private url: string = `${Utils.api_url}/user`; //Url para realizar las peticiones de login y logout
 
     /**
      * Realiza la instancia de una petición para el servidor que realiza el login de un usuario
@@ -123,5 +124,20 @@ export class LoginService{
         }else{
             this.toastService.error('No se ha podido asignar correctamente el perfil al usuario');
         }
+    }
+
+    getPermanentSession(): User | null{
+        const user = localStorage.getItem('user'); //Toma el valor de localstorage
+        return user ? JSON.parse(user): null; //lo retorna usando el json
+    }
+
+    setPermanentSession(user: User){
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+
+    clearSession(){
+        localStorage.removeItem('user');
+        this.userLogged.next(null);
+        this.userPermissions.next(null);
     }
 }
