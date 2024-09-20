@@ -10,6 +10,7 @@ import { InfoRequest } from '../../../request_info.model';
 import { ToastrService } from 'ngx-toastr';
 import { SwalPortalTargets, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { Permission } from '../../permission.model';
+import { LoginService } from '../../../login/login.service';
 
 @Component({
   selector: 'app-roles',
@@ -20,11 +21,11 @@ export class RolesComponent implements OnInit {
   constructor(
     private rolepermissionService: RolePermissionsService,
     private toastService: ToastrService,
-    public readonly swalTargets: SwalPortalTargets
+    public readonly swalTargets: SwalPortalTargets,
+    private loginService: LoginService
   ) {}
 
-  @ViewChild('addElementSwal')
-  public readonly addRoleSwal!: SwalComponent;
+  @ViewChild('addElementSwal') public readonly addRoleSwal!: SwalComponent;
 
   //Iconos utilizados
   faTrash = faTrash;
@@ -129,13 +130,12 @@ export class RolesComponent implements OnInit {
     //Obtenemos el indice del elemento obtenido
     let indexOfArray = this.roles.indexOf(role);
 
-    //Eliminamos el objeto del arreglo del componente padre compartido por input
-    this.roles.splice(indexOfArray, 1);
-
     this.rolepermissionService.deleteRole(role).subscribe({
       next: (response: InfoRequest) => {
         if (response.status == 'ok') {
           this.toastService.success(response.message);
+          //Eliminamos el objeto del arreglo del componente padre compartido por input
+          this.roles.splice(indexOfArray, 1);
         } else {
           this.toastService.error(response.message);
         }

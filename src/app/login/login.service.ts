@@ -92,6 +92,15 @@ export class LoginService{
     }
 
     /**
+   * Obtiene la instancia del usuario logeado actualmente
+   * @return {User} instancia de la clase User actual en userLogged.
+   * @public
+   */
+    public getUser(): User | null{
+        return this.userLogged.getValue();
+    }
+
+    /**
  * Recorre los roles de un user y los permissions se transfieren hacia userPermissions.
  * 
  * @param user -  Instancia de una clase User que debe tener cargados valores en permissions.

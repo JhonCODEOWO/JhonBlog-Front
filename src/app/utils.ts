@@ -2,7 +2,8 @@ import { Permission } from './administracion/permission.model';
 
 export class Utils {
 
-    static api_url:string = 'http://localhost:8088/api'; // Url general del servidor de backend
+    static api_url:string = 'http://localhost:8088/api'; // Url general del servidor de backend api
+    static url_backend:string = 'http://localhost:8088'; // Url general del servidor de backend
         /**
      * Verifica si un permiso está presente en el arreglo de permisos.
      * 
@@ -20,7 +21,7 @@ export class Utils {
     
 
     static getUrlServer(): string{
-        const serverurl = `http://localhost:8088`;
+        const serverurl = Utils.url_backend;
         return serverurl;
     }
 
@@ -35,4 +36,6 @@ export class Utils {
         const urlResource = `${urlServer}/${pathResource}`;
         return urlResource;
     }
+
+
 }
