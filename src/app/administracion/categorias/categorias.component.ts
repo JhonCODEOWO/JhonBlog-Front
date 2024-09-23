@@ -33,7 +33,8 @@ export class CategoriasComponent implements OnInit {
   category: Category = new Category();
 
   setCategory(category: Category){
-    this.category = category;
+    let cloneCategory: Category = Object.assign(new Category(), category)//Clonar categoría con una nueva instancia para evitar bindearlo a la referencia de modificación.
+    this.category = cloneCategory;
   }
 
   /**
@@ -65,6 +66,7 @@ export class CategoriasComponent implements OnInit {
       return true;
     }
 
+    this.toastService.warning('No se puede proceder si no has llenado los campos obligatorios');
     return false;
   }
 
@@ -119,7 +121,7 @@ export class CategoriasComponent implements OnInit {
       next: (response: InfoRequest)=>{
         if (response.status == 'ok') {
           //Modificar el elemento en la colección.
-          this.categoriesService.modifyCategory(category);
+          this.categoriesService.modifyElementFromCategories(category);
           //Cerrar el modal.
           this.modalAdd.close();
           //Limpiar los datos

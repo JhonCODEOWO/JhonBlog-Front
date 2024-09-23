@@ -1,13 +1,15 @@
 <div class="relative">
     <button class="bg-green-500 p-3" [swal]="modalAdd">Añadir nuevo</button>
-    <div class="grid grid-cols-5 mt-6 gap-4" *ngIf="categories && categories.length>0">
-        <div *ngFor="let category of categories" class="flex flex-col bg-slate-600 p-4">
+    <div class="grid grid-cols-4 mt-6 gap-4" *ngIf="categories && categories.length>0">
+        <div *ngFor="let category of categories" class="flex flex-col bg-slate-600 p-4 gap-y-3">
             <div>
                 <p class="font-extrabold text-xl">{{category.name}}</p>
-                <p class="font-normal text-base">{{category.description}}</p>
+                <p class="font-normal text-base text-justify">{{category.description}}</p>
             </div>
-            <p class="text-xs">Creado por: {{category.user?.name}} el {{category.created_at | date}}</p>
-            <p class="text-xs">Última modificación: {{category.updated_at| date}}</p>
+            <div>
+                <p class="text-xs">Creado por: {{category.user?.name}} el {{category.created_at | date}}</p>
+                <p class="text-xs">Última modificación: {{category.updated_at| date}}</p>
+            </div>
             <div class="mt-auto flex justify-between">
                 <button (click)="setCategory(category)" [swal]="modalAdd">Modificar</button>
                 <button (click)="deleteCategory(category)">Eliminar</button>

@@ -123,6 +123,7 @@ export class CategoriesService{
             let categoryFinded = categories.findIndex((categoryIn)=>categoryIn.id === category.id);
 
             if (categoryFinded != -1) { //Si el índice ha sido encontrado
+                category.updated_at = new Date();
                 //Reemplazar los datos del objeto
                 categories[categoryFinded] = category;
                 //Notificar cambios
