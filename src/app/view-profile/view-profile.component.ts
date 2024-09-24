@@ -31,7 +31,7 @@ export class ViewProfileComponent implements OnInit {
     this.userService.getUser(id).subscribe({
       next: (user: User) => {
         this.user = user; //Asigna el usuario hacia la propiedad de la plantilla
-        (this.loginService.matchWithUserLogged(user))?this.isCurrentUser=true: this.isCurrentUser=false; //Verificar si el usuario que ha ingresado coincide con el usuario recibido.
+        (this.loginService.matchWithUserLogged(user.id))?this.isCurrentUser=true: this.isCurrentUser=false; //Verificar si el usuario que ha ingresado coincide con el usuario recibido.
         (this.loginService.isAutenticated())?this.isLogged=true:this.isLogged=false; //Verifica si el usuario que ha ingresado está logeado o no
 
       },

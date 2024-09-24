@@ -1,0 +1,11 @@
+<div class="min-h-screen p-3 relative">
+    <div>
+        <h1 class="text-5xl font-black">Tu espacio personal</h1>
+        <h5>Genera los blogs que deseas para tus seguidores.</h5>
+    </div>
+    <div>
+
+    </div>
+    <app-no-resources *ngIf="articles?.length == 0"></app-no-resources>
+</div>
+<button class="absolute top-6 right-6 bg-green-400 p-3"><fa-icon [icon]="faAdd" class="text-xl"></fa-icon></button>

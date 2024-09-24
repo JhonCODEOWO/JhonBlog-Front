@@ -75,9 +75,11 @@ export class LoginService{
      * 
      * @returns `true` si el userLogged es diferente de null y `false` si ese valor esta vacío dando a entender que no hay nadie logeado.
      */
-    matchWithUserLogged(user: User): boolean{
-        if (this.userLogged.getValue()!= null) {
-            return this.userLogged.getValue()?.id === user.id;
+    matchWithUserLogged(id: number): boolean{
+        const actualUser: User | null = this.userLogged.getValue();
+        if (actualUser) {
+            console.log(actualUser.id === id);
+            return actualUser.id === id;
         }
         return false;
     }

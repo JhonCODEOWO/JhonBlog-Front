@@ -24,6 +24,11 @@ import { CreateprofileComponent } from './login/createprofile/createprofile.comp
 import { ProfileServices } from './administracion/roles-perm/users/profile.service';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { LoaderComponent } from './loader/loader.component';
+import { PostsComponent } from './posts/posts.component';
+import { MatchWithUserLoggedGuard } from './MatchUserLogged.service';
+import { PostsService } from './posts/posts.service';
+import { NoResourcesComponent } from './no-resources/no-resources.component';
+import { CreateArticleComponent } from './create-article/create-article.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +43,9 @@ import { LoaderComponent } from './loader/loader.component';
     CreateprofileComponent,
     ViewProfileComponent,
     LoaderComponent,
+    PostsComponent,
+    NoResourcesComponent,
+    CreateArticleComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +71,9 @@ import { LoaderComponent } from './loader/loader.component';
     provideAnimationsAsync(),
     LoginService,
     LoginGuard,
-    ProfileServices
+    MatchWithUserLoggedGuard,
+    ProfileServices,
+    PostsService
   ],
   bootstrap: [AppComponent]
 })

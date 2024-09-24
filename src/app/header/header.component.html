@@ -1,4 +1,4 @@
-<header class=" bg-slate-300 dark:bg-black text-black dark:text-white flex justify-between pt-2 pb-2">
+<header class=" bg-slate-300 dark:bg-black text-black dark:text-white flex justify-between pt-2 pb-2 shadow-md shadow-black">
     <a class="flex flex-col items-center p-3" [routerLink]="['']">
         <p class="text-3xl w-full">Jhon<span class="font-black">Blog</span></p>
         <p class="font-light text-xl">Tu sitio de interés</p>
@@ -16,11 +16,14 @@
                     <fa-icon *ngIf="menuVisible==false" [icon]="faCaredDown"></fa-icon> 
                     <fa-icon *ngIf="menuVisible==true" [icon]="faCaredUp"></fa-icon>
                 </p>
-                <div *ngIf="menuVisible" class="absolute bg-slate-300 dark:bg-black z-10 flex flex-col" @fadeInOut>
-                    <a *ngIf="findPermission('admin_access')" [routerLink]="['admin/index']">Administración</a>
-                    <a *ngIf="actualUser?.profile" [routerLink]="['/profile/view', actualUser?.id]">Visualizar perfil</a>
-                    <a *ngIf="!actualUser?.profile" [routerLink]="['/createprofile']">Crear perfil</a>
-                    <li class="text-red-500 cursor-pointer" (click)="deslogear()">Cerrar sesión</li>
+                <div *ngIf="menuVisible" class="absolute bg-slate-300 dark:bg-black z-10" @fadeInOut>
+                    <div *ngIf="actualUser" class="flex flex-col">
+                        <a *ngIf="findPermission('admin_access')" [routerLink]="['admin/index']">Administración</a>
+                        <a *ngIf="actualUser.profile" [routerLink]="['/profile/view', actualUser.id]">Visualizar perfil</a>
+                        <a [routerLink]="['manageposts', actualUser.id]">Publicaciones</a>
+                        <a *ngIf="!actualUser.profile" [routerLink]="['/createprofile']">Crear perfil</a>
+                        <li class="text-red-500 cursor-pointer" (click)="deslogear()">Cerrar sesión</li>
+                    </div>
                 </div>
             </li>
             <li>Acerca de...</li>

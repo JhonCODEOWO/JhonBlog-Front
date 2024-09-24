@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
       //Suscripción hacia la propiedad userLogged para recibir cambios.
       this.loginService.userLogged$.subscribe({
-        next: (user: User | null)=>{
+        next: (user: User | null)=>{ //Recepción de un nuevo valor en la suscripción.
           //Si el usuario es diferente de nulo es porque ya hay algo logeado
           if (user != null) {
             this.logeado = this.loginService.isAutenticated();
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
       //Suscripción para obtener los permisos almacenados en un usuario
       this.loginService.userPermissions$.subscribe({
-        next: (permissions: Permission[] | null)=>{
+        next: (permissions: Permission[] | null)=>{ //Obtenci+on de nuevos permisos.
           this.permissions=permissions;
         },
         error: (error: HttpErrorResponse)=>{

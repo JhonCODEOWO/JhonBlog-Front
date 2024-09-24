@@ -114,22 +114,7 @@ export class CategoriesService{
    * @public
    */
     public modifyElementFromCategories(category: Category){
-        //Obtener valores actuales
-        const categories: Category[] | null = this.categories.getValue();
-
-        //Obtener el objeto del arreglo que coincida con el id de la instancia recibida
-        if (categories) {
-            //Obtener el índice del objeto en la instancia categoríes si coincide con el id del objeto recibido
-            let categoryFinded = categories.findIndex((categoryIn)=>categoryIn.id === category.id);
-
-            if (categoryFinded != -1) { //Si el índice ha sido encontrado
-                category.updated_at = new Date();
-                //Reemplazar los datos del objeto
-                categories[categoryFinded] = category;
-                //Notificar cambios
-                this.categories.next(categories);
-            }
-        }
+        Utils.modifyElementFromBehavior(this.categories, category);
     }
 
     /**
@@ -138,19 +123,6 @@ export class CategoriesService{
    * @public
    */
     public deleteElementFromCategories(category: Category){
-        //Obtener valores actuales en categories
-        const categories: Category[] | null = this.categories.getValue();
-        if (categories) {
-            //Encontrar el índice del objeto en categories si el id es el mismo que la instancia que se recibe de category
-            const indexOf = categories.findIndex((categoryIn)=>categoryIn.id === category.id);
-
-            if (indexOf != -1) {
-                //Eliminarlo del arreglo
-                categories.splice(indexOf, 1);
-
-                //Notificar cambios al behavior subject
-                this.categories.next(categories);
-            }
-        }
+        Utils.deleteElementFromBehavior(this.categories, category);
     }
 }
