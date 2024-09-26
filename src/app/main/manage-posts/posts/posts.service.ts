@@ -2,12 +2,12 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { Article } from "./post.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Utils } from "../utils";
+import { Utils } from "../../../utils";
 import { ToastrService } from "ngx-toastr";
-import { InfoRequest } from "../request_info.model";
-import { User } from "../administracion/roles-perm/users/user.model";
-import { DataCSRF } from "../dataCSRF.service";
-import { LoginService } from "../login/login.service";
+import { InfoRequest } from "../../../request_info.model";
+import { User } from "../../../administracion/roles-perm/users/user.model";
+import { DataCSRF } from "../../../dataCSRF.service";
+import { LoginService } from "../../../login/login.service";
 
 @Injectable()
 export class PostsService{
@@ -35,7 +35,7 @@ export class PostsService{
     loadPostOfUser(){
         const userActual: User | null = this.loginService.getUser();
         if (userActual) {
-            this.httpClient.get<Article[] | null>(`${this.url}/${userActual.id}`).subscribe({
+            this.httpClient.get<Article[] | null>(`${this.url}/${userActual.id}/all`).subscribe({
                 next: (posts: Article[] | null)=>{
                     this.postsUser.next(posts);
                 },
@@ -90,5 +90,13 @@ export class PostsService{
 
     deleteArticleInCollection(article: Article){
         Utils.deleteElementFromBehavior(this.postsUser, article);
+    }
+
+    clearAllData(){
+        this.posts.next(null);
+    }
+
+    clearAllDataOnUsers(){
+        this.postsUser.next(null);
     }
 }

@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, viewChild } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
-import { PostsService } from '../posts/posts.service';
-import { Article } from '../posts/post.model';
+import { PostsService } from './manage-posts/posts/posts.service';
+import { Article } from './manage-posts/posts/post.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   constructor(private postService: PostsService, private toastService: ToastrService){}
 
   posts: Article[] | null = null;
@@ -24,5 +24,9 @@ export class MainComponent implements OnInit {
           
         }
       }); 
+  }
+
+  ngOnDestroy(): void {
+      this.postService.clearAllData();
   }
 }

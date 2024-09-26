@@ -1,4 +1,4 @@
-import { User } from "../administracion/roles-perm/users/user.model";
+import { User } from "../../../administracion/roles-perm/users/user.model";
 
 export class Image{
     id: number | null = null;

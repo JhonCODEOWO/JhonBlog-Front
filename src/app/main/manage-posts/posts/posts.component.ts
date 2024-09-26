@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { LoginService } from '../login/login.service';
+import { LoginService } from '../../../login/login.service';
 import { ActivatedRoute } from '@angular/router';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { PostsService } from './posts.service';
@@ -11,7 +11,7 @@ import { Article } from './post.model';
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.css'
 })
-export class PostsComponent implements OnInit{
+export class PostsComponent implements OnInit, OnDestroy{
   constructor(private toastService: ToastrService,private loginService: LoginService, private route: ActivatedRoute, private postService: PostsService){}
   faAdd = faAdd;
   articles: Article[] | null = null;
@@ -26,5 +26,9 @@ export class PostsComponent implements OnInit{
         this.toastService.error('Ha ocurrido un error grave, recarga completamente la página, y si este error sigue apareciendo, reportalo al desarrollador.');
       }
     })
+  }
+
+  ngOnDestroy(): void {
+      this.postService.clearAllDataOnUsers();
   }
 }

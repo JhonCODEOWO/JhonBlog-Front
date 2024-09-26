@@ -1,0 +1,26 @@
+<div class="p-5">
+    <div *ngFor="let article of articles">
+        <h3 class="font-black text-5xl">{{article.tittle}}</h3>
+        <div *ngIf="article.user">
+            <h5 class="italic text-2xl">Por: <a [routerLink]="['/profile/view/', article.user.id]" class="hover:underline">{{article.user.name}}</a></h5>
+        </div>
+        <!-- Si las categorías están vacías -->
+        <div *ngIf="article.categories && article.categories.length == 0">
+            <p>Sin categorías asignadas</p>
+        </div>
+
+        <!-- Listar categorías -->
+        <div *ngIf="article.categories && article.categories.length > 0">
+
+        </div>
+
+        <!-- Listado de opciones CRUD -->
+        <div *ngIf="isUserManaging">
+            <button>Editar</button>
+            <button>Eliminar</button>
+            <button>Opciones</button>
+        </div>
+    </div>
+
+    <app-no-resources *ngIf="articles && articles.length == 0" [nameElement]="'post'"></app-no-resources>
+</div>

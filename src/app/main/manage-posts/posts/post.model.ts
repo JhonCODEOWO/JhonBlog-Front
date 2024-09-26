@@ -1,5 +1,5 @@
-import { Category } from "../administracion/categorias/category.model";
-import { User } from "../administracion/roles-perm/users/user.model";
+import { Category } from "../../../administracion/categorias/category.model";
+import { User } from "../../../administracion/roles-perm/users/user.model";
 import { Image } from "./image.model";
 
 export class Article{

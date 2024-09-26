@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../administracion/roles-perm/users/user.model';
-import { UserServices } from '../administracion/roles-perm/users/users.service';
+import { User } from '../../administracion/roles-perm/users/user.model';
+import { UserServices } from '../../administracion/roles-perm/users/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Utils } from '../utils';
-import { LoginService } from '../login/login.service';
+import { Utils } from '../../utils';
+import { LoginService } from '../../login/login.service';
 
 @Component({
   selector: 'app-view-profile',

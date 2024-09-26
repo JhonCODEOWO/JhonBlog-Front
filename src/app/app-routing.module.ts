@@ -9,8 +9,8 @@ import { ModifyUserComponent } from './modify-user/modify-user.component';
 import { LoginGuard } from './login/loginGuard.service';
 import { CreateacountComponent } from './login/createacount/createacount.component';
 import { CreateprofileComponent } from './login/createprofile/createprofile.component';
-import { ViewProfileComponent } from './view-profile/view-profile.component';
-import { PostsComponent } from './posts/posts.component';
+import { ViewProfileComponent } from './main/view-profile/view-profile.component';
+import { PostsComponent } from './main/manage-posts/posts/posts.component';
 import { MatchWithUserLoggedGuard } from './MatchUserLogged.service';
 
 const routes: Routes = [

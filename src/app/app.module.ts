@@ -22,13 +22,14 @@ import { LoginGuard } from './login/loginGuard.service';
 import { CreateacountComponent } from './login/createacount/createacount.component';
 import { CreateprofileComponent } from './login/createprofile/createprofile.component';
 import { ProfileServices } from './administracion/roles-perm/users/profile.service';
-import { ViewProfileComponent } from './view-profile/view-profile.component';
+import { ViewProfileComponent } from './main/view-profile/view-profile.component';
 import { LoaderComponent } from './loader/loader.component';
-import { PostsComponent } from './posts/posts.component';
+import { PostsComponent } from './main/manage-posts/posts/posts.component';
 import { MatchWithUserLoggedGuard } from './MatchUserLogged.service';
-import { PostsService } from './posts/posts.service';
+import { PostsService } from './main/manage-posts/posts/posts.service';
 import { NoResourcesComponent } from './no-resources/no-resources.component';
-import { CreateArticleComponent } from './create-article/create-article.component';
+import { CreateArticleComponent } from './main/manage-posts/create-article/create-article.component';
+import { ListPostsComponent } from './main/list-posts/list-posts.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { CreateArticleComponent } from './create-article/create-article.componen
     PostsComponent,
     NoResourcesComponent,
     CreateArticleComponent,
+    ListPostsComponent,
   ],
   imports: [
     BrowserModule,
