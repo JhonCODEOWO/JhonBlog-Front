@@ -1,0 +1,7 @@
+<div class="flex flex-col gap-y-2">
+    <div>
+        <label [for]="id" class="font-thin text-xl">{{ title }}</label>
+    </div>
+    <input [type]="type" [placeholder]="placeholder" [name]="name" [id]="id" [(ngModel)]="value"
+        class="focus:outline-none p-1 text-black dark:text-white dark:bg-zinc-800">
+</div>

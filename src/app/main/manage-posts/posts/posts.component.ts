@@ -11,24 +11,8 @@ import { Article } from './post.model';
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.css'
 })
-export class PostsComponent implements OnInit, OnDestroy{
+export class PostsComponent{
   constructor(private toastService: ToastrService,private loginService: LoginService, private route: ActivatedRoute, private postService: PostsService){}
   faAdd = faAdd;
-  articles: Article[] | null = null;
-
-  ngOnInit(): void {
-    this.postService.loadPostOfUser();
-    this.postService.$postsUser.subscribe({
-      next: (articles: Article[] | null)=>{
-        this.articles = articles;
-      },
-      error: (error)=>{
-        this.toastService.error('Ha ocurrido un error grave, recarga completamente la página, y si este error sigue apareciendo, reportalo al desarrollador.');
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-      this.postService.clearAllDataOnUsers();
-  }
+  
 }

@@ -28,8 +28,11 @@ import { PostsComponent } from './main/manage-posts/posts/posts.component';
 import { MatchWithUserLoggedGuard } from './MatchUserLogged.service';
 import { PostsService } from './main/manage-posts/posts/posts.service';
 import { NoResourcesComponent } from './no-resources/no-resources.component';
-import { CreateArticleComponent } from './main/manage-posts/create-article/create-article.component';
+import { CreateArticleComponent } from './main/manage-posts/posts/create-article/create-article.component';
 import { ListPostsComponent } from './main/list-posts/list-posts.component';
+import { PostsInicioComponent } from './main/manage-posts/posts/posts-inicio/posts-inicio.component';
+import { InputElementComponent } from './ui/input-element/input-element.component';
+import { ButtonElementComponent } from './ui/button-element/button-element.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { ListPostsComponent } from './main/list-posts/list-posts.component';
     NoResourcesComponent,
     CreateArticleComponent,
     ListPostsComponent,
+    PostsInicioComponent,
+    InputElementComponent,
+    ButtonElementComponent
   ],
   imports: [
     BrowserModule,

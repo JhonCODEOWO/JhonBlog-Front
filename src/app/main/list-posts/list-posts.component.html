@@ -1,6 +1,8 @@
-<div class="p-5">
-    <div *ngFor="let article of articles">
-        <h3 class="font-black text-5xl">{{article.tittle}}</h3>
+<div class="p-5 grid" [ngClass]="{'grid-cols-2': isUserManaging, 'grid-cols-3': !isUserManaging}">
+    <div *ngFor="let article of articles" class="bg-gray-500 p-3">
+        <div>
+            <h3 class="font-black" [ngClass]="{'text-3xl': isUserManaging, 'text-5xl': !isUserManaging}">{{article.tittle}}</h3>
+        </div>
         <div *ngIf="article.user">
             <h5 class="italic text-2xl">Por: <a [routerLink]="['/profile/view/', article.user.id]" class="hover:underline">{{article.user.name}}</a></h5>
         </div>
@@ -14,11 +16,15 @@
 
         </div>
 
-        <!-- Listado de opciones CRUD -->
-        <div *ngIf="isUserManaging">
-            <button>Editar</button>
-            <button>Eliminar</button>
-            <button>Opciones</button>
+        <div class="mt-3">
+            <p class="flex gap-x-8"> <span> <fa-icon [icon]="faEye"></fa-icon> {{article.views}} </span> <span><fa-icon [icon]="faHeart" class="text-rose-500"></fa-icon> {{article.likes}} </span> </p>
+
+            <!-- Listado de opciones CRUD -->
+            <div *ngIf="isUserManaging" class="text-xl flex justify-between">
+                <button><fa-icon [icon]="faPen"></fa-icon></button>
+                <button><fa-icon [icon]="faTrashCan"></fa-icon></button>
+                <button class="hover:rotate-45"><fa-icon [icon]="faGear"></fa-icon></button>
+            </div>
         </div>
     </div>
 

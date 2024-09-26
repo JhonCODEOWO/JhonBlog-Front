@@ -17,7 +17,7 @@ export class PostsService{
     public $posts = this.posts.asObservable();
 
     private postsUser = new BehaviorSubject<Article[] | null>(null);
-    public $postsUser = this.posts.asObservable();
+    public $postsUser = this.postsUser.asObservable();
 
     private url = `${Utils.api_url}/post`;
 

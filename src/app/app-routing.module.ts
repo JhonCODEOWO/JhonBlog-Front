@@ -12,8 +12,11 @@ import { CreateprofileComponent } from './login/createprofile/createprofile.comp
 import { ViewProfileComponent } from './main/view-profile/view-profile.component';
 import { PostsComponent } from './main/manage-posts/posts/posts.component';
 import { MatchWithUserLoggedGuard } from './MatchUserLogged.service';
+import { CreateArticleComponent } from './main/manage-posts/posts/create-article/create-article.component';
+import { PostsInicioComponent } from './main/manage-posts/posts/posts-inicio/posts-inicio.component';
 
 const routes: Routes = [
+  //Rutas para componentes más generales
   {path: '', component:MainComponent},
   {path: 'login', component:LoginComponent},
   {path: 'createacount', component:CreateacountComponent},
@@ -21,7 +24,14 @@ const routes: Routes = [
   {path: 'profile/view/:id', component:ViewProfileComponent},
   {path: 'createprofile', canActivate: [LoginGuard],component:CreateprofileComponent}, //Acceder a CreateProfile pero en modo de creación
   {path: 'profile/edit/:id', canActivate: [LoginGuard],component:CreateprofileComponent}, //Ruta para acceder al componente createprofile pero en modo edición
-  {path: 'manageposts/:id', canActivate: [LoginGuard, MatchWithUserLoggedGuard], component: PostsComponent},
+
+  //Rutas que maneja el componente PostsComponent (Componente principal)
+  {path: 'manageposts/:id', canActivate: [LoginGuard, MatchWithUserLoggedGuard], component: PostsComponent,
+    children: [
+      {path: 'create', component: CreateArticleComponent},
+      {path: '', component: PostsInicioComponent},
+    ]
+  },
   {path: 'admin', canActivate: [LoginGuard], loadChildren: ()=> import('./administracion/administracion.module').then(m => m.AdministracionModule)},
   //Rutas para el control de un usuario
   {path: 'user', children: [

@@ -1,16 +1,23 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Article } from '../manage-posts/posts/post.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../login/login.service';
+import { PostsService } from '../manage-posts/posts/posts.service';
+import { faPen, faTrashCan, faGear, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list-posts',
   templateUrl: './list-posts.component.html',
   styleUrl: './list-posts.component.css'
 })
-export class ListPostsComponent implements OnInit, OnDestroy{
-  constructor(private route: ActivatedRoute, private loginService: LoginService){}
-  
+export class ListPostsComponent implements OnInit,OnChanges{
+  constructor(private route: ActivatedRoute, private loginService: LoginService, private postService: PostsService){}
+  faTrashCan = faTrashCan;
+  faPen = faPen;
+  faGear = faGear;
+  faEye = faEye;
+  faHeart = faHeart;
+
   @Input() articles: Article[] | null = null;
 
   /**
@@ -31,7 +38,9 @@ export class ListPostsComponent implements OnInit, OnDestroy{
       }
   }
 
-  ngOnDestroy(): void {
-      this.articles = null;
+  ngOnChanges(changes: SimpleChanges): void {
+      if (changes['articles']) {
+        console.log('Cambios en la propiedad articles:', changes['articles']);
+      }
   }
 }

@@ -1,11 +1,8 @@
-<div class="min-h-screen p-3 relative">
-    <div>
-        <h1 class="text-5xl font-black">Tu espacio personal</h1>
-        <h5>Genera los blogs que deseas para tus seguidores.</h5>
-    </div>
-    <div>
-        <!-- Listado de elementos usando el componente -->
-        <app-list-posts [articles]="articles"></app-list-posts>
-    </div>
+<div class="bg-gray-700 p-6">
+    <h1 class="text-5xl font-black">Tu espacio personal</h1>
+    <h5>Genera los blogs que deseas para tus seguidores, visualiza estadísticas y más.</h5>
 </div>
-<button class="absolute top-6 right-6 bg-green-400 p-3"><fa-icon [icon]="faAdd" class="text-xl"></fa-icon></button>
+<div class="min-h-screen p-3 relative">
+    <router-outlet></router-outlet>
+</div>
+<a class="absolute top-6 right-6 bg-green-400 p-3" [routerLink]="['create']"><fa-icon [icon]="faAdd" class="text-xl"></fa-icon></a>

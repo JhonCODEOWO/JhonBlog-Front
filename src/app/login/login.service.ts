@@ -78,7 +78,6 @@ export class LoginService{
     matchWithUserLogged(id: number): boolean{
         const actualUser: User | null = this.userLogged.getValue();
         if (actualUser) {
-            console.log(actualUser.id === id);
             return actualUser.id === id;
         }
         return false;
